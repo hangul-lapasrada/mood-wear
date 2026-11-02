@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mood Wear — Back Office</title>
+<style>
+:root{--ink:#111;--mut:#8a8a8a;--line:#e8e8e8;--acc:#111;--bg:#fff;--soft:#f6f6f6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'Segoe UI',Khmer,'Noto Sans Thai',sans-serif;background:var(--bg);color:var(--ink);padding:28px 20px 60px}
+h1{font-size:26px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.sub{color:var(--mut);font-size:13px;margin-top:6px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 18px}
+.card{flex:1 1 120px;min-width:118px;border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--soft)}
+.card b{display:block;font-size:26px;font-weight:700}.card span{font-size:11.5px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;font-size:13px;cursor:pointer;letter-spacing:.04em}
+.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.bar{display:flex;gap:8px;margin:16px 0 12px}
+input,select{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14px;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:1.5px solid var(--ink)}
+.search{flex:1;max-width:340px}
+button{border:none;border-radius:10px;padding:9px 16px;font-size:13px;cursor:pointer;font-weight:600;letter-spacing:.03em}
+.b1{background:var(--ink);color:#fff}.b1:hover{opacity:.85}
+.b2{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.bx{background:#fff;color:#b00;border:1px solid #f3caca}.bx:hover{background:#fdf3f3}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.09em;text-align:left;padding:10px 10px;border-bottom:1px solid var(--ink)}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle;word-break:break-word;max-width:230px}
+.tbl td.acts{white-space:nowrap;text-align:right}
+.tbl input{width:100%;min-width:70px;padding:6px 8px;font-size:13px}
+.newrow td{background:var(--soft)}
+.tmp{background:#f2f2f2;border-style:dashed}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;opacity:0;transition:.25s}
+.toast.show{opacity:1}
+.mut{color:var(--mut)}
+</style>
+</head>
+<body>
+<h1>Mood Wear Back Office</h1>
+<div class="sub">ระบบจัดการฐานข้อมูล Mood Wear · แสดง / เพิ่ม / แก้ไข / ลบ ทุกตาราง</div>
+<div class="stats" id="stats"></div>
+<div class="tabs" id="tabs"></div>
+<div class="bar">
+  <input class="search" id="q" placeholder="ค้นหาในตารางนี้…">
+  <button class="b2" id="rref">รีเฟรช</button>
+  <button class="b1" id="add">+ เพิ่มข้อมูล</button>
+</div>
+<table class="tbl"><thead id="th"></thead><tbody id="tb"></tbody></table>
+<div class="toast" id="toast"></div>
+<script>
+const T={
+ products:{pk:'id',cols:['name','price','category','stock','img','vgroup','vname','vorder'],label:'สินค้า'},
+ users:{pk:'id',cols:['username','email','phone','password_hash'],label:'ผู้ใช้'},
+ orders:{pk:'id',cols:['user_id','address','total','created_at'],label:'คำสั่งซื้อ'},
+ order_items:{pk:'id',cols:['order_id','product_id','quantity','size','color','unit_price'],label:'รายการสินค้าในคำสั่งซื้อ'},
+ cart_items:{pk:'id',cols:['user_id','product_id','quantity','size','color'],label:'ตะกร้าสินค้า'},
+ favorites:{pk:null,cols:['user_id','product_id','created_at'],label:'รายการที่ถูกใจ'}
+};
+let cur='products',rows=[],editing=null,nnew=false;
+const el=i=>document.getElementById(i);
+function toast(m){const t=el('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
+async function stats(){
+ const r=await fetch('/admin/stats'),d=await r.json();
+ el('stats').innerHTML=Object.entries(d).map(([t,n])=>`<div class="card"><b>${n}</b><span>${T[t].label}</span></div>`).join('');
+}
+async function load(){
+ const q=el('q').value.trim();
+ const r=await fetch('/admin/t/'+cur+(q?'?q='+encodeURIComponent(q):''));
+ if(!r.ok){toast('โหลดไม่สำเร็จ: '+r.status);rows=[];}
+ else rows=await r.json();
+ editing=null;nnew=false;render();
+}
+function cell(c,k,v,inp){return inp?`<input data-k="${k}" value="${v??''}">`:`${v??''}`;}
+function render(){
+ const s=T[cur];
+ el('th').innerHTML=`<tr>${s.cols.map(c=>`<th>${c}</th>`).join('')}<th style="text-align:right">จัดการ</th></tr>`;
+ let h='';
+ if(nnew)h+=`<tr class="newrow">${s.cols.map(c=>`<td><input data-nk="${c}" placeholder="${c}"></td>`).join('')}<td class="acts"><button class="b1" onclick="saveNew()">บันทึก</button> <button class="b2" onclick="nnew=false;render()">ยกเลิก</button></td></tr>`;
+ h+=rows.map(r=>{
+  const id=s.pk?r[s.pk]:r['user_id']+'_'+r['product_id'];
+  const open=String(editing)===String(id);
+  return `<tr data-id="${id}">${s.cols.map(c=>`<td>${open?cell(0,c,r[c],1):(r[c]===null?'<span class="mut">—</span>':r[c])}</td>`).join('')}
+  <td class="acts">${open?`<button class="b1" onclick="saveEd('${id}')">บันทึก</button> <button class="b2" onclick="editing=null;render()">ยกเลิก</button>`:
+  `<button class="b2" onclick="edit('${id}')">แก้ไข</button> <button class="bx" onclick="del('${id}')">ลบ</button>`}</td></tr>`;
+ }).join('');
+ el('tb').innerHTML=h||`<tr><td colspan="${s.cols.length+1}" class="mut" style="padding:24px 10px">ไม่มีข้อมูล</td></tr>`;
+}
+function edit(id){editing=id;render();}
+function add(){nnew=!nnew;editing=null;render();}
+function grab(tr,pre){const o={};tr.querySelectorAll('input[data-'+pre+'k]').forEach(i=>{o[i.dataset[pre+'k']]=i.value;});return o;}
+function fix(t,o){
+ for(const k in o)if(o[k]!==''&&(typeof T[t].defaults?.[k]==='number'))o[k]=+o[k];
+ if(t==='products'){['price','stock','vorder'].forEach(k=>{if(o[k]!=='')o[k]=+o[k]||0;});}
+ if(t==='orders'){['user_id','total'].forEach(k=>{if(o[k]!=='')o[k]=+o[k]||0;});}
+ if(t==='order_items'&&(t==='order_items')){['order_id','product_id','quantity','unit_price'].forEach(k=>{if(o[k]!=='')o[k]=+o[k]||0;});}
+ if(t==='cart_items'){['user_id','product_id','quantity'].forEach(k=>{if(o[k]!=='')o[k]=+o[k]||0;});}
+ for(const k in o)if(o[k]==='')delete o[k];
+ return o;
+}
+async function saveNew(){
+ const o=fix(cur,grab(el('tb').rows[0],'n'));
+ const r=await fetch('/admin/t/'+cur,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)});
+ const j=await r.json();toast(r.ok?'เพิ่มข้อมูลแล้ว':'เพิ่มไม่สำเร็จ: '+(j.detail||''));stats();load();
+}
+async function saveEd(id){
+ const tr=[...el('tb').rows].find(t=>t.dataset.id===id);if(!tr)return;
+ const o=fix(cur,grab(tr,''));
+ const[uid,pid]=id.split('_');
+ let r;
+ if(T[cur].pk){r=await fetch('/admin/t/'+cur+'/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)});}
+ else{r=await fetch('/admin/t/'+cur+'/'+pid+'?uid='+uid,{method:'PUT'});}
+ const j=await r.json();toast(r.ok?'แก้ไขข้อมูลแล้ว':'แก้ไขไม่สำเร็จ: '+(j.detail||''));editing=null;stats();load();
+}
+async function del(id){
+ const[uid,pid]=id.split('_');
+ const url=T[cur].pk?'/admin/t/'+cur+'/'+id:'/admin/t/'+cur+'/'+pid+'?uid='+uid;
+ if(!confirm('ยืนยันการลบข้อมูล '+id+' ?'))return;
+ const r=await fetch(url,{method:'DELETE'});
+ toast(r.ok?'ลบข้อมูลแล้ว':'ลบไม่สำเร็จ');stats();load();
+}
+el('tabs').innerHTML=Object.entries(T).map(([t,v],i)=>`<div class="tab${i===0?' active':''}" data-t="${t}">${v.label}</div>`).join('');
+el('tabs').onclick=e=>{const t=e.target.dataset.t;if(!t)return;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.t===t));cur=t;load();};
+el('rref').onclick=()=>{stats();load();};
+el('add').onclick=add;
+el('q').addEventListener('keydown',e=>{if(e.key==='Enter')load();});
+stats();load();
+</script>
+</body>
+</html>

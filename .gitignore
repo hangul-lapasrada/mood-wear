@@ -1,0 +1,26 @@
+# Dart / Flutter
+.dart_tool/
+.packages.pub-cache/
+build/
+ios/Pods/
+.flutter-plugins*
+**/Generated*.xcconfig
+untranslated.json
+
+# Python
+backend/__pycache__/
+.mypo_cache/
+
+# ไฟล์ที่ระบบสร้างเองตอนรัน
+backend/fashion.db
+backend/uvicorn.log
+backend/admin.html.b
+
+# Log
+*.log
+
+# OS
+.DS_Store
+
+# โฟลเดอร์แนบของระบบแชท (ไม่เกี่ยวกับ Source Code)
+.cloud-attachments/

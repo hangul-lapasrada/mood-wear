@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: -apple-system, 'Segoe UI', Arial, sans-serif; }
+  body { width:1500px; height:950px; background:#FDF8F3; position:relative; padding:34px 40px; }
+  h2.t { font-size:30px; color:#3B2440; letter-spacing:.5px; }
+  h2.t span { color:#6D28D9; }
+  .canvas { position:relative; width:1420px; height:850px; margin-top:18px; }
+  .entity { position:absolute; background:#fff; border:2.5px solid #7C3AED; border-radius:12px;
+            box-shadow:0 6px 18px rgba(109,40,217,.14); width:280px; z-index:2; }
+  .entity .head { background:linear-gradient(90deg,#6D28D9,#9D5CE8); color:#fff; font-weight:700;
+                  font-size:19px; padding:9px 14px; border-radius:9px 9px 0 0; letter-spacing:1px; }
+  .entity table { width:100%; border-collapse:collapse; font-size:14.5px; color:#3B2440; table-layout:fixed; }
+  .entity td { padding:5px 12px; border-top:1px solid #F0E9FA; white-space:nowrap; overflow:hidden; }
+  .pk { font-weight:700; color:#6D28D9; }
+  .fk { color:#DB2777; font-style:italic; font-size:13px; }
+  svg.links { position:absolute; inset:0; z-index:1; }
+  .label { position:absolute; z-index:3; background:#FDF8F3; color:#4C1D95; font-weight:700; font-size:15px; padding:0 6px; }
+  .brand { position:absolute; right:44px; top:30px; color:#B9A6C4; font-size:15px; letter-spacing:3px; }
+</style>
+</head>
+<body>
+<h2 class="t">Mood Wear — <span>ER Diagram (SQLite: fashion.db)</span></h2>
+<div class="brand">FLUTTER  ⟷  FASTAPI  ⟷  DATABASE</div>
+
+<div class="canvas">
+<svg class="links" width="1420" height="850">
+  <!-- users -> orders -->
+  <path d="M 180 190 V 600" fill="none" stroke="#7C3AED" stroke-width="3"/>
+  <!-- users -> cart_items -->
+  <path d="M 250 190 V 340 H 470 V 600" fill="none" stroke="#DB2777" stroke-width="3"/>
+  <!-- users -> favorites -->
+  <path d="M 320 190 V 400 H 880 V 600" fill="none" stroke="#DB2777" stroke-width="3"/>
+  <!-- products -> cart_items -->
+  <path d="M 700 250 V 330 H 610 V 600" fill="none" stroke="#7C3AED" stroke-width="3"/>
+  <!-- products -> order_items -->
+  <path d="M 790 250 V 300 H 1120 V 600" fill="none" stroke="#7C3AED" stroke-width="3"/>
+  <!-- products -> favorites -->
+  <path d="M 880 250 V 360 H 960 V 600" fill="none" stroke="#DB2777" stroke-width="3"/>
+  <!-- orders -> order_items -->
+  <path d="M 200 780 V 810 H 1180 V 780" fill="none" stroke="#7C3AED" stroke-width="3"/>
+</svg>
+
+<!-- users -->
+<div class="entity" style="left:60px; top:20px;">
+  <div class="head">users</div>
+  <table>
+    <tr><td class="pk">id&nbsp;&nbsp;PK</td><td>INTEGER</td></tr>
+    <tr><td>username</td><td>TEXT</td></tr>
+    <tr><td>email</td><td>TEXT</td></tr>
+    <tr><td>phone</td><td>TEXT</td></tr>
+    <tr><td>password_hash</td><td>TEXT</td></tr>
+  </table>
+</div>
+
+<!-- products -->
+<div class="entity" style="left:640px; top:20px;">
+  <div class="head">products</div>
+  <table>
+    <tr><td class="pk">id&nbsp;&nbsp;PK</td><td>INTEGER</td></tr>
+    <tr><td>name</td><td>TEXT</td></tr>
+    <tr><td>price</td><td>INTEGER</td></tr>
+    <tr><td>category</td><td>TEXT</td></tr>
+    <tr><td>stock</td><td>INTEGER</td></tr>
+    <tr><td>img</td><td>TEXT</td></tr>
+    <tr><td>vgroup / vname</td><td>TEXT</td></tr>
+  </table>
+</div>
+
+<!-- orders -->
+<div class="entity" style="left:60px; top:600px;">
+  <div class="head">orders</div>
+  <table>
+    <tr><td class="pk">id&nbsp;&nbsp;PK</td><td>INTEGER</td></tr>
+    <tr><td class="fk" colspan="2">user_id&nbsp;&nbsp;FK → users.id</td></tr>
+    <tr><td>address</td><td>TEXT</td></tr>
+    <tr><td>total</td><td>INTEGER</td></tr>
+    <tr><td>created_at</td><td>TEXT</td></tr>
+  </table>
+</div>
+
+<!-- cart_items -->
+<div class="entity" style="left:400px; top:600px;">
+  <div class="head">cart_items</div>
+  <table>
+    <tr><td class="pk">id&nbsp;&nbsp;PK</td><td>INTEGER</td></tr>
+    <tr><td class="fk" colspan="2">user_id&nbsp;&nbsp;FK → users.id</td></tr>
+    <tr><td class="fk" colspan="2">product_id&nbsp;&nbsp;FK → products.id</td></tr>
+    <tr><td>quantity</td><td>INTEGER</td></tr>
+    <tr><td>size / color</td><td>TEXT</td></tr>
+  </table>
+</div>
+
+<!-- favorites -->
+<div class="entity" style="left:740px; top:600px;">
+  <div class="head">favorites</div>
+  <table>
+    <tr><td class="pk">user_id&nbsp;&nbsp;PK, FK</td><td>→ users.id</td></tr>
+    <tr><td class="pk">product_id&nbsp;&nbsp;PK, FK</td><td>→ products.id</td></tr>
+    <tr><td colspan="2" style="color:#999999;">(composite primary key)</td></tr>
+  </table>
+</div>
+
+<!-- order_items -->
+<div class="entity" style="left:1080px; top:600px;">
+  <div class="head">order_items</div>
+  <table>
+    <tr><td class="pk">id&nbsp;&nbsp;PK</td><td>INTEGER</td></tr>
+    <tr><td class="fk" colspan="2">order_id&nbsp;&nbsp;FK → orders.id</td></tr>
+    <tr><td class="fk" colspan="2">product_id&nbsp;&nbsp;FK → products.id</td></tr>
+    <tr><td>quantity</td><td>INTEGER</td></tr>
+    <tr><td>size / color</td><td>TEXT</td></tr>
+  </table>
+</div>
+
+<div class="label" style="left:192px; top:380px;">1 : N</div>
+<div class="label" style="left:262px; top:328px;">1 : N</div>
+<div class="label" style="left:580px; top:388px;">1 : N</div>
+<div class="label" style="left:625px; top:318px;">1 : N</div>
+<div class="label" style="left:1132px; top:278px;">1 : N</div>
+<div class="label" style="left:940px; top:348px;">1 : N</div>
+<div class="label" style="left:660px; top:798px;">1 : N</div>
+</div>
+</body>
+</html>

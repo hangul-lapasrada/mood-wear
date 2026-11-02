@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Mood Wear — Presentation</title>
+<style>
+:root{--ink:#111;--mut:#777;--line:#e2e2e2;--soft:#f5f5f5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Noto Sans Thai","Thonburi",Sukhumvit,Tahoma,sans-serif;color:var(--ink)}
+@page{size:A4 landscape;margin:0}
+.slide{width:297mm;height:210mm;padding:16mm 20mm;page-break-after:always;display:flex;flex-direction:column}
+.kick{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+h1{font-size:26px;margin-bottom:10px}
+h1 em{font-style:normal;border-bottom:4px solid #111}
+p.lead{font-size:13.5px;color:#333;max-width:240mm}
+table{border-collapse:collapse;width:100%;font-size:11px;margin-top:8mm}
+th{border:1px solid #aaa;background:var(--soft);padding:6px 8px;text-align:left;font-size:10px;letter-spacing:.04em}
+td{border:1px solid var(--line);padding:6px 8px;vertical-align:top}
+.two{display:flex;gap:10mm;margin-top:6mm}
+.two>div{flex:1}
+.card{background:var(--soft);border-radius:10px;padding:10px 14px;font-size:12px}
+.card b{font-size:20px;display:block}
+.foot{margin-top:auto;font-size:10px;color:var(--mut);display:flex;justify-content:space-between}
+img{max-width:100%;max-height:100%;object-fit:contain}
+figure{text-align:center}
+figcaption{font-size:10px;color:var(--mut);margin-top:4px}
+ul{margin:4mm 0 0 6mm;font-size:13px;line-height:1.8}
+.small{font-size:11.5px;color:#444}
+code{background:var(--soft);padding:1px 6px;border-radius:4px;font-size:11px}
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<div class="slide" style="justify-content:center;text-align:center">
+  <div class="kick" style="margin-bottom:8mm">Final Project · Digital Database · 802244 · 2569</div>
+  <h1 style="font-size:56px;letter-spacing:.1em;border:none">MOOD <span style="letter-spacing:.1em">WEAR</span></h1>
+  <p class="lead" style="margin:6mm auto;max-width:180mm;font-size:16px">ระบบฐานข้อมูลร้านค้าแฟชั่นพร้อม Back Office (Web) และแอปหน้าร้าน (Flutter)</p>
+  <p class="small">ผู้นำเสนอ: รหัสนักศึกษา — ชื่อนักศึกษา &nbsp;·&nbsp; Repository: GitHub (mood-wear) &nbsp;·&nbsp; ไฟล์: 69db_รหัสนักศึกษา_02.pdf</p>
+</div>
+
+<!-- 2 -->
+<div class="slide">
+  <div class="kick">02 · Introduction</div>
+  <h1><em>ที่มาและแหล่งข้อมูลของระบบ</em></h1>
+  <p class="lead">Mood Wear จำลองร้านค้าแฟชั่นจริงที่มีหน้าร้านให้ผู้ซื้อ (Flutter App) และหลังบ้านให้ผู้ดูแล (Web Back Office) — ทั้งสองฝั่งใช้ฐานข้อมูลชุดเดียวกันผ่าน REST API (FastAPI)</p>
+  <div class="two">
+    <div>
+      <ul style="font-size:12.5px;line-height:1.9">
+        <li>แหล่งข้อมูล: <b>รวบรวมเอง + Web Scraping</b> รูป/รายการสินค้าแฟชั่นจริง (Samba, AMI Paris, Essentials, Human Made, Vivienne Westwood)</li>
+        <li>ครอบคลุม 6 หมวด: Shoes · Upper · Bottom · Hat · Accessories · Set</li>
+        <li>ชุดข้อมูลตัวอย่างผู้ใช้และการสั่งซื้อ สร้างความหลากหลายเพื่อสาธิตการค้นหา/สรุปยอด</li>
+        <li>ข้อมูลส่วนบุคคลจำลองทั้งหมด — ไม่มีข้อมูลจริงของบุคคลใด</li>
+      </ul>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start">
+      <div class="card"><b>66</b>สินค้า</div><div class="card"><b>51</b>ผู้ใช้</div><div class="card"><b>58</b>คำสั่งซื้อ</div>
+      <div class="card"><b>111</b>รายการสั่งซื้อ</div><div class="card"><b>52</b>ตะกร้า</div><div class="card"><b>52</b>ถูกใจ</div>
+    </div>
+  </div>
+  <div class="foot"><span>MOOD WEAR · Database Final Project</span><span>2 / 10</span></div>
+</div>
+
+<!-- 3 -->
+<div class="slide">
+  <div class="kick">03 · Conceptual Design</div>
+  <h1><em>จำแนก Entity และ Attribute</em></h1>
+  <p class="lead">วิเคราะห์ระบบงานได้ 5 Entity หลัก → แปลงเป็น 6 ตาราง (ORDER ITEM แยกเป็นตารางเชื่อม)</p>
+  <table style="margin-top:5mm">
+    <tr><th>Entity</th><th>Attribute หลัก</th><th>บทบาทในระบบ</th></tr>
+    <tr><td><b>USER</b></td><td>id, username, email (unique), phone, password_hash</td><td>สมาชิกผู้ซื้อ — สั่งซื้อ / ตะกร้า / รายการถูกใจ</td></tr>
+    <tr><td><b>PRODUCT</b></td><td>id, name, price, category, stock, img, vgroup, vname, vorder</td><td>สินค้า + กลุ่ม variant (สินค้าชุดรูปเดียวกันหลายสี)</td></tr>
+    <tr><td><b>ORDER</b></td><td>id, user_id, address, total, created_at</td><td>ใบสั่งซื้อ 1 ครั้ง / ผู้ใช้ 1 คน</td></tr>
+    <tr><td><b>ORDER ITEM</b></td><td>id, order_id, product_id, quantity, size, color, unit_price</td><td>สินค้าแต่ละรายการในใบสั่งซื้อ</td></tr>
+    <tr><td><b>CART ITEM</b></td><td>id, user_id, product_id, quantity, size, color (UNIQUE)</td><td>สินค้าที่รอการสั่งซื้อ</td></tr>
+    <tr><td><b>FAVORITE</b></td><td>user_id + product_id (composite PK), created_at</td><td>สินค้าที่ผู้ใช้กดถูกใจ</td></tr>
+  </table>
+  <div class="foot"><span>MOOD WEAR · Database Final Project</span><span>3 / 10</span></div>
+</div>
+
+<!-- 4 -->
+<div class="slide">
+  <div class="kick">04 · ER Diagram</div>
+  <h1><em>ER Diagram ของระบบ</em></h1>
+  <figure style="flex:1;min-height:0">
+    <img src="img/er_diagram.png" alt="ER Diagram">
+    <figcaption>ความสัมพันธ์ 6 แบบ: 1:N ห้าแบบ (users→orders→order_items←products, users/products→cart_items) และ M:N ผ่าน favorites</figcaption>
+  </figure>
+  <div class="foot"><span>MOOD WEAR · Database Final Project</span><span>4 / 10</span></div>
+</div>
+
+<!-- 5 -->
+<div class="slide">
+  <div class="kick">05 · Mapping</div>
+  <h1><em>ER → Relation Schema (PK / FK)</em></h1>
+  <table style="margin-top:6mm;font-size:12px">
+    <tr><th>ตาราง</th><th>Primary Key</th><th>Foreign Key</th><th>Constraint เพิ่มเติม</th></tr>
+    <tr><td>users</td><td>id</td><td>—</td><td>email UNIQUE</td></tr>
+    <tr><td>products</td><td>id</td><td>—</td><td>—</td></tr>
+    <tr><td>orders</td><td>id</td><td>user_id → users.id</td><td>created_at default</td></tr>
+    <tr><td>order_items</td><td>id</td><td>order_id → orders.id · product_id → products.id</td><td>unit_price เก็บราคา ณ ขณะสั่ง</td></tr>
+    <tr><td>cart_items</td><td>id</td><td>user_id · product_id</td><td>UNIQUE(user_id, product_id, size, color)</td></tr>
+    <tr><td>favorites</td><td>(user_id, product_id)</td><td>user_id · product_id</td><td>Composite PK — แปลงจาก M:N</td></tr>
+  </table>
+  <p class="small" style="margin-top:5mm">เปิดบังคับ <code>PRAGMA foreign_keys = ON</code> — ทุก FK ถูกตรวจสอบทั้งตอน seed และตอน Back Office Insert/Update</p>
+  <div class="foot"><span>MOOD WEAR · Database Final Project</span><span>5 / 10</span></div>
+</div>
+
+<!-- 6 -->
+<div class="slide">
+  <div class="kick">06 · Normalization</div>
+  <h1><em>การทำ Normalization</em></h1>
+  <div class="two" style="margin-top:8mm">
+    <div class="card" style="padding:8mm;font-size:12.5px"><b style="font-size:16px">1NF ✔</b>ทุกตารางเก็บค่า atomic, มี PK ชัดเจน, ไม่มีกลุ่มข้อมูลซ้ำในช่องเดียว</div>
+    <div class="card" style="padding:8mm;font-size:12.5px"><b style="font-size:16px">2NF ✔</b>ตารางเดียวที่ใช้ composite key (favorites) ไม่มี attribute ที่พึ่งพาเพียงส่วนหนึ่งของ key → ไม่มี Partial Dependency</div>
+    <div class="card" style="padding:8mm;font-size:12.5px"><b style="font-size:16px">3NF ✔</b>ไม่มี Transitive Dependency — ชื่อ/ราคาสินค้าไม่ถูกเก็บซ้ำในตารางอื่น, unit_price เป็น “ราคาขณะสั่งซื้อ” ตามเงื่อนไขธุรกิจ</div>
+  </div>
+  <p class="lead" style="margin-top:7mm">ผลลัพธ์: ข้อมูลถูกกระจายอย่างถูกต้อง แก้ไขตรงจุด และรวมสอบถามด้วย JOIN ได้ครบทุกความต้องการของระบบ</p>
+  <div class="foot"><span>MOOD WEAR · Database Final Project</span><span>6 / 10</span></div>
+</div>
+
+<!-- 7 -->
+<div class="slide">
+  <div class="kick">07 · Data Dictionary</div>
+  <h1><em>Data Dictionary (ตัวอย่างตารางหลัก)</em></h1>
+  <div class="two">
+    <div>
+      <table style="margin-top:3mm;font-size:10.5px">
+        <tr><th colspan="2">products (66 แถว)</th></tr>
+        <tr><td><b>id</b> INTEGER PK</td><td>รหัสสินค้า</td></tr>
+        <tr><td>name TEXT</td><td>ชื่อสินค้า</td></tr>
+        <tr><td>price INTEGER</td><td>ราคา (บาท)</td></tr>
+        <tr><td>category TEXT</td><td>หมวดสินค้า</td></tr>
+        <tr><td>stock INTEGER</td><td>คงเหลือ</td></tr>
+        <tr><td>img, vgroup, vname, vorder</td><td>รูป + กลุ่ม variant + ลำดับ</td></tr>
+      </table>
+      <table style="margin-top:3mm;font-size:10.5px">
+        <tr><th colspan="2">order_items (111 แถว)</th></tr>
+        <tr><td><b>id</b> INTEGER PK</td><td>รหัสรายการ</td></tr>
+        <tr><td>order_id FK</td><td>ใบสั่งซื้อ</td></tr>
+        <tr><td>product_id FK</td><td>สินค้า</td></tr>
+        <tr><td>quantity, size, color</td><td>จำนวน/ไซส์/สี</td></tr>
+        <tr><td>unit_price</td><td>ราคาต่อชิ้น ณ ขณะสั่ง</td></tr>
+      </table>
+    </div>
+    <div>
+      <table style="margin-top:3mm;font-size:10.5px">
+        <tr><th colspan="2">users (51 แถว)</th></tr>
+        <tr><td><b>id</b> INTEGER PK</td><td>รหัสผู้ใช้</td></tr>
+        <tr><td>username, phone</td><td>ชื่อ / เบอร์โทร</td></tr>
+        <tr><td>email UNIQUE</td><td>อีเมล (ไม่ซ้ำ)</td></tr>
+        <tr><td>password_hash</td><td>รหัสผ่านเข้ารหัส</td></tr>
+      </table>
+      <table style="margin-top:3mm;font-size:10.5px">
+        <tr><th colspan="2">orders (58 แถว)</th></tr>
+        <tr><td><b>id</b> INTEGER PK</td><td>รหัสคำสั่งซื้อ</td></tr>
+        <tr><td>user_id FK</td><td>ผู้สั่งซื้อ</td></tr>
+        <tr><td>address, total</td><td>ที่อยู่ / ยอดรวม</td></tr>
+        <tr><td>created_at</td><td>เวลาสั่ง</td></tr>
+      </table>
+      <table style="margin-top:3mm;font-size:10.5px">
+        <tr><th colspan="2">cart_items (52) · favorites (52)</th></tr>
+        <tr><td>cart_items: user_id FK, product_id FK</td><td>UNIQUE(user,product,size,color)</td></tr>
+        <tr><td>favorites: <b>(user_id, product_id)</b></td><td>Composite PK + created_at</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>Data Dictionary ฉบับเต็มในรายงาน หมวด 8</span><span>7 / 10</span></div>
+</div>
+
+<!-- 8 -->
+<div class="slide">
+  <div class="kick">08 · System &amp; API</div>
+  <h1><em>สถาปัตยกรรมระบบ และ REST API</em></h1>
+  <div class="two">
+    <div>
+      <p class="small" style="line-height:1.9">แอปหน้าร้าน (Flutter Mobile/Web)<br>↓ HTTP/JSON<br><b>FastAPI Backend</b> (Python) — ตรวจสอบข้อมูล + เปิด FK<br>↓<br><b>SQLite Database</b> (fashion.db) · export เป็น MySQL ได้พร้อม</p>
+      <p class="small" style="margin-top:4mm">Back Office = ส่วนหน้าเดียวกันต่างหนึ่งเท่านั้น — ใช้ตารางเดียวกันจริง:</p>
+      <p class="small"><code>/admin/t/{table}</code> CRUD · <code>/admin/stats</code> สรุปจำนวนแถว</p>
+    </div>
+    <div>
+      <table style="margin-top:0;font-size:10.5px">
+        <tr><th>Method</th><th>Path</th><th>ใช้ทำ</th></tr>
+        <tr><td>GET</td><td>/products</td><td>รายการสินค้าหน้าร้าน</td></tr>
+        <tr><td>POST</td><td>/register · /login</td><td>สมัคร/เข้าสู่ระบบ (users)</td></tr>
+        <tr><td>POST</td><td>/cart · /checkout</td><td>ใส่ตะกร้า → สร้าง orders+order_items</td></tr>
+        <tr><td>GET/POST/DELETE</td><td>/favorites</td><td>รายการถูกใจ (composite key)</td></tr>
+        <tr><td>GET/POST/PUT/DELETE</td><td>/admin/t/{table}[/{id}]</td><td>Back Office CRUD ทุกตาราง</td></tr>
+        <tr><td>GET</td><td>/admin/stats</td><td>สถิติแถวทุกตาราง</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>MOOD WEAR · Database Final Project</span><span>8 / 10</span></div>
+</div>
+
+<!-- 9 -->
+<div class="slide">
+  <div class="kick">09 · Back Office Demo</div>
+  <h1><em>Back Office — แสดง / เพิ่ม / แก้ไข / ลบ จริง</em></h1>
+  <div class="two" style="align-items:flex-start">
+    <div>
+      <ul style="font-size:12px;line-height:1.8">
+        <li><b>แสดง/ค้นหา:</b> แท็บ 6 ตาราง + ช่องค้นหา + การ์ดนับแถว</li>
+        <li><b>Insert:</b> ปุ่ม “+ เพิ่มข้อมูล” → ฟอร์มแถวใหม่ → บันทึกตรวจ FK</li>
+        <li><b>Update:</b> กด “แก้ไข” → แถวกลายเป็น input → บันทึก</li>
+        <li><b>Delete:</b> ปุ่ม “ลบ” พร้อมยืนยัน (รองรับ composite key ของ favorites)</li>
+      </ul>
+    </div>
+    <div style="flex:1.4" class="two">
+      <figure><img src="img/bo_overview.png"/><figcaption>ภาพรวมการ์ดแถว + แท็บ</figcaption></figure>
+      <figure><img src="img/bo_edit.png"/><figcaption>โหมดแก้ไขในแถว</figcaption></figure>
+      <figure><img src="img/bo_orders.png"/><figcaption>แท็บคำสั่งซื้อ</figcaption></figure>
+    </div>
+  </div>
+  <div class="foot"><span>สาธิตเป็นวิดีโอ 60 วินาที (ไฟล์ 69db_รหัสนักศึกษา_03.mp4)</span><span>9 / 10</span></div>
+</div>
+
+<!-- 10 -->
+<div class="slide">
+  <div class="kick">10 · Summary</div>
+  <h1><em>สรุป และวิธีติดตั้งระบบ</em></h1>
+  <div class="two">
+    <div>
+      <ul style="font-size:12.5px;line-height:2">
+        <li>มี <b>6 ตาราง</b> (เกินเกณฑ์ 5 Entity) และความสัมพันธ์ <b>6 แบบ</b> (เกิน 3 แบบ)</li>
+        <li>ทุกตารางมีข้อมูล <b>≥ 50 แถว</b> จากข้อมูลรวบรวมเอง + Web Scraping</li>
+        <li>PK/FK ถูกต้อง บังคับ ForeignKey จริง + ผ่าน Normalization 3NF</li>
+        <li>Back Office แสดง/เพิ่ม/แก้ไข/ลบ ได้ทุกตาราง พร้อมวิดีโอสาธิต</li>
+        <li>Source Code + README (อธิบายไฟล์ทุกไฟล์) พร้อมส่งขึ้น GitHub</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card"><b style="font-size:14px">ติดตั้ง</b>
+        <div style="margin-top:6px;font-size:11.5px;line-height:2">
+        1. <code>pip install -r backend/requirements.txt</code><br>
+        2. <code>uvicorn main:app --port 8000</code> (seed ฐานข้อมูลเอง)</div>
+        <div class="small" style="margin-top:8px">หรือ import <code>database_export_sqlite.sql</code> / <code>database_export_mysql.sql</code></div>
+      </div>
+      <div class="card" style="margin-top:6px"><b style="font-size:14px">เข้าใช้งาน</b>
+        <div style="margin-top:6px;font-size:12px">Back Office: <code>http://127.0.0.1:8000/admin</code><br>แอปหน้าร้าน: Flutter (run on device / Chrome)</div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:8mm;font-size:15px">ขอบคุณครับ 🙏 <span class="small">– ทีม Mood Wear</span></div>
+  <div class="foot"><span>MOOD WEAR · Database Final Project</span><span>10 / 10</span></div>
+</div>
+
+</body>
+</html>
