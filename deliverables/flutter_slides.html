@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Mood Wear — Presentation (Flutter 802202)</title>
+<style>
+:root{--ink:#111;--mut:#777;--line:#e2e2e2;--soft:#f5f5f5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Noto Sans Thai","Thonburi",Sukhumvit,Tahoma,sans-serif;color:var(--ink)}
+@page{size:A4 landscape;margin:0}
+.slide{width:297mm;height:209mm;padding:12mm 16mm;page-break-after:always;display:flex;flex-direction:column;overflow:hidden}
+.slide > *{flex-shrink:0}
+.kick{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mut);margin-bottom:5px}
+h1{font-size:22px;margin-bottom:6px;line-height:1.55;padding-top:3px}
+h1{border-bottom:4px solid #111;padding-bottom:4px;line-height:normal;display:block}
+p.lead{font-size:12.5px;color:#333;max-width:250mm;line-height:1.6}
+table{border-collapse:collapse;width:100%;font-size:10.5px;margin-top:6mm}
+th{border:1px solid #aaa;background:var(--soft);padding:5px 7px;text-align:left;font-size:9.5px;letter-spacing:.04em}
+td{border:1px solid var(--line);padding:5px 7px;vertical-align:top}
+.two{display:flex;gap:8mm;margin-top:5mm;flex:1;min-height:0}
+.two>div{flex:1;display:flex;flex-direction:column;min-height:0}
+.card{background:var(--soft);border-radius:9px;padding:8px 12px;font-size:11px}
+.card b{font-size:19px;display:block}
+.foot{margin-top:auto;font-size:9px;color:var(--mut);display:flex;justify-content:space-between;padding-top:4mm}
+img{max-width:100%;max-height:100%;object-fit:contain}
+figure{text-align:center;display:flex;flex-direction:column;flex:1;min-height:0;align-items:center;justify-content:center}
+figcaption{font-size:9.5px;color:var(--mut);margin-top:4px}
+ul{margin:3mm 0 0 5mm;font-size:12px;line-height:1.85}
+.small{font-size:10.5px;color:#444}
+code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:10px}
+.shots{display:flex;gap:8mm;justify-content:center;align-items:flex-start;flex:1 1 auto;min-height:0;overflow:hidden}
+.shots figure{flex:0 1 auto}
+.shots img{max-height:116mm;border:1px solid var(--line);border-radius:6px}
+.pill{display:inline-block;background:#efe7fb;color:#4c1d95;border-radius:14px;padding:3px 10px;font-size:9.5px;margin:2px 3px 2px 0}
+.grid5{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:5mm}
+.feat{background:var(--soft);border-radius:10px;padding:9px 12px;font-size:11px;line-height:1.55}
+.feat b{display:block;font-size:12.5px;margin-bottom:2px}
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<div class="slide" style="justify-content:center;text-align:center">
+  <div class="kick" style="margin-bottom:6mm">Final Project · Flutter · 802202 · 2569</div>
+  <h1 style="font-size:54px;letter-spacing:.1em;border:none">MOOD WEAR</h1>
+  <p class="lead" style="margin:5mm auto;max-width:190mm;font-size:15px">แอปพลิเคชันร้านค้าแฟชั่นบนมือถือ “แต่งตามอารมณ์ที่คุณเป็น”<br>Flutter (Dart) + REST API (FastAPI) + ฐานข้อมูล SQLite</p>
+  <p class="small" style="margin-top:8mm">ผู้จัดทำ<br><b>นางสาว ลภัสรดา หาญกุล 681310676</b> · <b>นายวรเศรษฐ์ บุญสวัสดิ์ 681310306</b></p>
+  <p class="small" style="margin-top:4mm;color:#777">ไฟล์: 69flutter_present_681310676_681310306.pdf</p>
+</div>
+
+<!-- 2 -->
+<div class="slide">
+  <div class="kick">02 · Main Idea</div>
+  <h1>ปัญหาและกลุ่มเป้าหมาย</h1>
+  <div class="two">
+    <div>
+      <p class="lead"><b>ปัญหา:</b> การแต่งชุดหนึ่งชุดต้องเปิดหลายแอปเพื่อเทียบเสื้อ กางเกง รองเท้า และเครื่องประดับ
+      แอปทั่วไปไม่มีฟีเจอร์ “ประกอบชุด” ให้เห็นราคารวมก่อนตัดสินใจ และไม่เก็บไอเท็มที่ถูกใจไว้จัดชุดซ้ำ
+      ขณะที่ร้านเล็ก ๆ ไม่มีเครื่องมือหลังบ้านจัดการสินค้าและคำสั่งซื้อ</p>
+      <ul>
+        <li><b>กลุ่มเป้าหมาย:</b> นักศึกษา/คนทำงาน 18–27 ปี ที่ช้อปผ่านมือถือและชอบแฟชั่นสตรีท</li>
+        <li><b>Insight:</b> ผู้ใช้เลือกเสื้อผ้าตาม “อารมณ์” และโอกาสในแต่ละวัน</li>
+        <li><b>ทางออก:</b> รวมเลือกซื้อ + ประกอบชุด + ถูกใจ + ตะกร้า ไว้ในแอปเดียว</li>
+      </ul>
+      <div style="margin-top:6mm">
+        <span class="pill">Flutter</span><span class="pill">Dart</span><span class="pill">FastAPI</span><span class="pill">SQLite</span><span class="pill">Material Design</span>
+      </div>
+    </div>
+    <div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div class="card"><b>7</b>หน้าจอหลัก</div>
+        <div class="card"><b>5</b>ฟีเจอร์หลัก</div>
+        <div class="card"><b>6</b>ตารางฐานข้อมูล</div>
+        <div class="card"><b>19</b>API endpoint</div>
+      </div>
+      <figure style="margin-top:5mm">
+        <img src="img/mobile_preview_home.png" alt="Home" style="max-height:96mm;border:1px solid var(--line);border-radius:6px">
+        <figcaption>หน้าแรกของแอป (รันจริงบน Flutter Web)</figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202</span><span>2 / 10</span></div>
+</div>
+
+<!-- 3 -->
+<div class="slide">
+  <div class="kick">03 · Features</div>
+  <h1>ฟีเจอร์หลัก 5 ข้อ</h1>
+  <div class="grid5">
+    <div class="feat"><b>1. เลือกซื้อตามหมวด (Home)</b>แบนเนอร์คอลเลกชัน · แท็บ New Arrival / Upper / Bottom / Hat / Shoes / Accessories · Top-Pick &amp; Trending</div>
+    <div class="feat"><b>2. รายละเอียดสินค้า</b>รูปหลายมุม · เลือกสีและไซส์ · ราคาและสต็อกคงเหลือ · กดถูกใจ · ใส่ตะกร้า/ซื้อทันที</div>
+    <div class="feat"><b>3. Style Studio (Mix &amp; Match)</b>หยิบหลายไอเท็มมาประกอบเป็นชุด เห็นราคารวมทันที และซื้อเป็นเซ็ต</div>
+    <div class="feat"><b>4. ตะกร้าและการสั่งซื้อ</b>ปรับจำนวน/ลบสินค้า · คำนวณยอดรวม + ค่าจัดส่ง · กรอกที่อยู่ · Checkout สร้างคำสั่งซื้อจริง</div>
+  </div>
+  <div class="feat" style="margin-top:5mm"><b>5. บัญชีผู้ใช้ &amp; รายการถูกใจ</b>สมัครสมาชิก/เข้าสู่ระบบ (รหัสผ่าน hash SHA-256) · หน้า Saved รวมไอเท็มที่กดหัวใจไว้</div>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202</span><span>3 / 10</span></div>
+</div>
+
+<!-- 4 -->
+<div class="slide">
+  <div class="kick">04 · Wireframe → ของจริง</div>
+  <h1>Home &amp; Product Detail</h1>
+  <div class="shots">
+    <figure><img src="img/wf1.png" alt="WF Home"><figcaption>Wireframe — Home</figcaption></figure>
+    <figure><img src="img/mobile_preview_home.png" alt="Home"><figcaption>หน้าจริง — Home</figcaption></figure>
+    <figure><img src="img/slide_product.png" alt="Product"><figcaption>หน้าจริง — Product Detail</figcaption></figure>
+  </div>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202</span><span>4 / 10</span></div>
+</div>
+
+<!-- 5 -->
+<div class="slide">
+  <div class="kick">05 · Style Studio</div>
+  <h1>ประกอบชุดเอง (Mix &amp; Match)</h1>
+  <div class="shots">
+    <figure><img src="img/wf7.png" alt="WF Studio"><figcaption>Wireframe — Style Studio</figcaption></figure>
+    <figure><img src="img/wf3.png" alt="WF Set"><figcaption>Wireframe — Set Detail</figcaption></figure>
+    <figure><img src="img/slide_studio.png" alt="Studio"><figcaption>หน้าจริง — ชุดที่ผู้ใช้ประกอบ (My Set) พร้อมราคารวม</figcaption></figure>
+  </div>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202</span><span>5 / 10</span></div>
+</div>
+
+<!-- 6 -->
+<div class="slide">
+  <div class="kick">06 · Search &amp; Saved</div>
+  <h1>ค้นหา และรายการที่ถูกใจ</h1>
+  <div class="shots">
+    <figure><img src="img/wf2.png" alt="WF Product"><figcaption>Wireframe — Product Detail</figcaption></figure>
+    <figure><img src="img/slide_search.png" alt="Search"><figcaption>หน้าจริง — Search</figcaption></figure>
+    <figure><img src="img/slide_saved.png" alt="Saved"><figcaption>หน้าจริง — Saved</figcaption></figure>
+  </div>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202</span><span>6 / 10</span></div>
+</div>
+
+<!-- 7 -->
+<div class="slide">
+  <div class="kick">07 · Basket &amp; Profile</div>
+  <h1>ตะกร้า การสั่งซื้อ และบัญชีผู้ใช้</h1>
+  <div class="shots">
+    <figure><img src="img/wf6.png" alt="WF Basket"><figcaption>Wireframe — Basket</figcaption></figure>
+    <figure><img src="img/slide_basket.png" alt="Basket"><figcaption>หน้าจริง — Basket (คำนวณยอดรวม + ที่อยู่ + Checkout)</figcaption></figure>
+    <figure><img src="img/slide_profile.png" alt="Profile"><figcaption>หน้าจริง — Profile (Login / Register)</figcaption></figure>
+  </div>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202</span><span>7 / 10</span></div>
+</div>
+
+<!-- 8 -->
+<div class="slide">
+  <div class="kick">08 · Navigation</div>
+  <h1>Navigation Flow</h1>
+  <figure style="flex:1;min-height:0">
+    <img src="img/flow.png" alt="Navigation flow" style="max-height:140mm">
+    <figcaption>5 แท็บหลัก (Home · Style Studio · Search · Saved · Profile) + เส้นทางไปหน้าลูก Product Detail / Set Detail / Basket</figcaption>
+  </figure>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202</span><span>8 / 10</span></div>
+</div>
+
+<!-- 9 -->
+<div class="slide">
+  <div class="kick">09 · Database</div>
+  <h1>ER Diagram และตารางที่แต่ละหน้าใช้</h1>
+  <div class="two">
+    <div>
+      <figure style="flex:1;min-height:0"><img src="img/er_diagram.png" alt="ER"></figure>
+    </div>
+    <div>
+      <table style="margin-top:0;font-size:10px">
+        <tr><th>หน้าจอ</th><th>ตาราง</th></tr>
+        <tr><td>Home / Search</td><td><code>products</code></td></tr>
+        <tr><td>Product Detail</td><td><code>products</code> · <code>favorites</code> · <code>cart_items</code></td></tr>
+        <tr><td>Style Studio / Set</td><td><code>products</code></td></tr>
+        <tr><td>Saved</td><td><code>favorites</code> · <code>products</code></td></tr>
+        <tr><td>Basket</td><td><code>cart_items</code> · <code>orders</code> · <code>order_items</code></td></tr>
+        <tr><td>Profile</td><td><code>users</code></td></tr>
+      </table>
+      <p class="small" style="margin-top:4mm">ความสัมพันธ์: users 1–N orders · orders 1–N order_items · products 1–N order_items ·
+      users/products 1–N cart_items · users + products M–N ผ่าน favorites (composite key)</p>
+    </div>
+  </div>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202</span><span>9 / 10</span></div>
+</div>
+
+<!-- 10 -->
+<div class="slide">
+  <div class="kick">10 · API</div>
+  <h1>REST API ที่แอปเรียกใช้</h1>
+  <table>
+    <tr><th style="width:12%">Method</th><th style="width:34%">Path</th><th>หน้าที่</th><th style="width:22%">หน้าจอ</th></tr>
+    <tr><td>GET</td><td><code>/products</code> · <code>/products/{id}</code></td><td>รายการ/รายละเอียดสินค้า (กรองหมวด, ค้นหา)</td><td>Home · Search · Product Detail</td></tr>
+    <tr><td>POST</td><td><code>/register</code> · <code>/login</code></td><td>สมัครสมาชิก / เข้าสู่ระบบ (SHA-256)</td><td>Profile</td></tr>
+    <tr><td>GET/POST/PUT/DELETE</td><td><code>/cart</code> · <code>/cart/{id}</code></td><td>จัดการตะกร้าสินค้า</td><td>Basket · Product Detail</td></tr>
+    <tr><td>GET/POST/DELETE</td><td><code>/favorites</code></td><td>รายการที่ถูกใจ (composite key)</td><td>Saved · Product Detail</td></tr>
+    <tr><td>GET/POST</td><td><code>/orders</code></td><td>สร้าง/ดูคำสั่งซื้อ พร้อม order_items</td><td>Basket (Checkout)</td></tr>
+    <tr><td>GET/POST/PUT/DELETE</td><td><code>/admin/t/{table}[/{id}]</code></td><td>CRUD ทุกตาราง สำหรับผู้ดูแลร้าน</td><td>Back Office</td></tr>
+  </table>
+  <p class="lead" style="margin-top:6mm">สรุป: Mood Wear แสดงให้เห็นการทำงานร่วมกันของ Flutter (UI) → REST API (FastAPI) → ฐานข้อมูล SQLite
+  ครบทั้งการเลือกซื้อ ประกอบชุด บันทึกสิ่งที่ถูกใจ และสั่งซื้อจริงในแอปเดียว</p>
+  <div class="foot"><span>MOOD WEAR · Flutter 802202 · ขอบคุณครับ/ค่ะ</span><span>10 / 10</span></div>
+</div>
+
+</body>
+</html>

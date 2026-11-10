@@ -1,0 +1,72 @@
+// Mood Wear — ER Diagram (dbdiagram.io)
+// ฐานข้อมูล: SQLite fashion.db (6 ตาราง)
+// วิธีใช้: 1) เปิด https://dbdiagram.io/d  2) ลบโค้ดเดิมในกล่องซ้าย  3) วางโค้ดนี้ทั้งหมด
+//         4) แผนผังจะโผล่ทางขวาทันที  5) Export → PNG / PDF เพื่อเอาลงรายงาน
+
+Table users [headercolor: #6D28D9] {
+  id integer [pk]
+  username varchar
+  email varchar [unique]
+  phone varchar
+  password_hash varchar
+}
+
+Table products [headercolor: #DB2777] {
+  id integer [pk]
+  name varchar
+  price integer
+  category varchar
+  stock integer
+  img varchar
+  vgroup varchar
+  vname varchar
+  vorder integer
+}
+
+Table orders [headercolor: #6D28D9] {
+  id integer [pk]
+  user_id integer
+  address varchar
+  total integer
+  created_at varchar [default: 'now']
+}
+
+Table order_items [headercolor: #DB2777] {
+  id integer [pk]
+  order_id integer
+  product_id integer
+  quantity integer
+  size varchar
+  color varchar
+  unit_price integer
+}
+
+Table cart_items [headercolor: #6D28D9] {
+  id integer [pk]
+  user_id integer
+  product_id integer
+  quantity integer [default: 1]
+  size varchar [default: 'M']
+  color varchar [default: '']
+  indexes {
+    (user_id, product_id, size, color) [unique]
+  }
+}
+
+Table favorites [headercolor: #DB2777] {
+  user_id integer
+  product_id integer
+  created_at varchar [default: 'now']
+  indexes {
+    (user_id, product_id) [pk]
+  }
+}
+
+// ความสัมพันธ์ตามการออกแบบ (1 รายการ = 1 เส้นในแผนผังเดียวกับ er_diagram.png)
+Ref: orders.user_id > users.id                  // 1 ลูกค้า สั่งซื้อได้หลายคำสั่ง
+Ref: order_items.order_id > orders.id           // 1 คำสั่งซื้อ มีหลายรายการสินค้า
+Ref: order_items.product_id > products.id       // 1 สินค้า อยู่ในหลายรายการ
+Ref: cart_items.user_id > users.id              // 1 ลูกค้า มีหลายรายการในตะกร้า
+Ref: cart_items.product_id > products.id
+Ref: favorites.user_id > users.id               // M:N ระหว่าง users กับ products ผ่าน favorites
+Ref: favorites.product_id > products.id

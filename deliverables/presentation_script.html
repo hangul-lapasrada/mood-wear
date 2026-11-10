@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Mood Wear — สคริปต์พรีเซ็นและคำถามจี้</title>
+<style>
+:root{--ink:#111;--mut:#666;--line:#e4e4e4;--soft:#f6f6f6}
+*{box-sizing:border-box}
+body{font-family:-apple-system,"Noto Sans Thai","Thonburi",Sukhumvit,Tahoma,sans-serif;color:var(--ink);font-size:12.5px;line-height:1.7;margin:0}
+@page{size:A4;margin:15mm}
+h1{font-size:24px;letter-spacing:.04em;margin:0 0 4px}
+h2{font-size:15px;margin:26px 0 8px;border-bottom:2px solid var(--ink);padding-bottom:5px;page-break-after:avoid}
+h3{font-size:13px;margin:18px 0 6px;page-break-after:avoid}
+p{margin:6px 0}
+.cover{height:250mm;display:flex;flex-direction:column;justify-content:center;text-align:center;page-break-after:always}
+.cover .kicker{letter-spacing:.35em;font-size:11px;color:var(--mut);text-transform:uppercase}
+.cover h1{font-size:44px;letter-spacing:.08em;margin:18px 0 6px}
+.cover .sub{color:var(--mut);font-size:14px}
+.cover .meta{margin-top:40px;color:var(--mut);font-size:12px;line-height:2}
+.speak{display:inline-block;background:#ffe9c7;border-radius:6px;padding:1px 8px;font-size:11px;font-weight:600;margin-bottom:4px}
+.quote{background:var(--soft);border-left:3px solid #999;padding:8px 12px;border-radius:0 6px 6px 0;margin:8px 0;page-break-inside:avoid}
+li{margin:4px 0}
+table{border-collapse:collapse;width:100%;font-size:11px;margin:8px 0}
+th{border:1px solid #999;background:var(--soft);padding:5px 7px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.05em}
+td{border:1px solid var(--line);padding:5px 7px;vertical-align:top}
+code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:11px}
+ul{margin:6px 0 6px 18px;padding:0}
+small{color:var(--mut)}
+.note{font-size:11px;color:var(--mut)}
+.badge{display:inline-block;background:var(--ink);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;letter-spacing:.06em;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Final Project · Digital Database · 802244</div>
+  <h1>MOOD WEAR</h1>
+  <div class="sub">สคริปต์พูดอธิบายหน้าชั้น + ชุดคำถามจี้พร้อมบทตอบ</div>
+  <div class="meta">
+    นางสาว ลภัสรดา หาญกุล 681310676<br>
+    นายวรเศรษฐ์ บุญสวัสดิ์ 681310306<br>
+    ภาคการศึกษา 2569
+  </div>
+</div>
+
+<h1>สคริปต์พรีเซ็น — ตามสไลด์ 10 หน้า (รวม ~5 นาที)</h1>
+<p class="note">ผู้พูด A = นางสาวลภัสรดา · ผู้พูด B = นายวรเศรษฐ์ · พูดในเครื่องหมายคำพูดคือบทที่อ่านได้ทันที</p>
+
+<h2>สไลด์ 1 · ชื่อเรื่อง <span class="speak">ผู้พูด A</span></h2>
+<div class="quote">"สวัสดีครับ/ค่ะ วันนี้พวกเราจะขอนำเสนอโปรเจกต์ Database Final Project รายวิชา Digital Database ระบบชื่อว่า Mood Wear ครับ/ค่ะ เราคือคนสองคน นางสาวลภัสรดา หาญกุล รหัส 681310676 และนายวรเศรษฐ์ บุญสวัสดิ์ รหัส 681310306 — Mood Wear คือระบบจัดการฐานข้อมูลร้านค้าเสื้อผ้าแฟชั่น ที่มีทั้งเว็บ Back Office ให้ทีมหลังบ้านจัดการข้อมูล และแอปหน้าร้านที่ลูกค้าใช้สั่งซื้อ ซึ่งทั้งสองฝั่งใช้ฐานข้อมูลชุดเดียวกัน"</div>
+
+<h2>สไลด์ 2 · ที่มาและแหล่งข้อมูล <span class="speak">ผู้พูด A</span></h2>
+<div class="quote">"ทำไมถึงต้องมีสองฝั่ง? เพราะเราอยากให้เห็นภาพร้านแฟชั่นจริง — เบื้องหน้าคือร้านที่ลูกค้าเลือกซื้อ เบื้องหลังคือทีมที่ดูสต็อกและคำสั่งซื้อ"</div>
+<div class="quote">"เรื่องแหล่งข้อมูลสำคัญมาก — ข้อมูลสินค้าทั้งหมดมาจากการ <b>รวบรวมเองและ web scraping</b> เราเก็บรายการสินค้าและรูปสินค้าสาธารณะจากเว็บแฟชั่นจริง ๆ อย่าง Samba, AMI Paris, Essentials, Human Made, Vivienne Westwood ครอบคลุม 6 หมวด จึงได้ข้อมูลสาธิตที่ใกล้เคียงความจริง"</div>
+<div class="quote">"ตัวเลขสำคัญ: สินค้า 66 ชิ้น · ผู้ใช้ 51 คน · คำสั่งซื้อ 58 รายการ · รายการสั่งซื้อ 111 แถว · ตะกร้า 52 · ถูกใจ 52 — <b>ทุกตารางเกิน 50 แถวตามเกณฑ์</b> และข้อมูลผู้ใช้เป็นข้อมูลจำลอง ไม่มีข้อมูลจริงของบุคคลใด"</div>
+
+<h2>สไลด์ 3 · Conceptual Design <span class="speak">ผู้พูด B</span></h2>
+<div class="quote">"ผมวิเคราะห์ระบบแล้วแยก Entity หลักได้ 5 ตัว: USER สมาชิกร้าน, PRODUCT สินค้า, ORDER คำสั่งซื้อ, CART ITEM สินค้าในตะกร้า และ FAVORITE สินค้าที่ผู้ใช้กดถูกใจ"</div>
+<div class="quote">"ตัวเด่นที่อยากให้สังเกตคือ <b>ORDER ITEM</b> — ผมตั้งใจแยกมันออกมาเป็นตารางเชื่อม (associative entity) เพราะหนึ่งคำสั่งซื้อมีสินค้าได้หลายชิ้นหลายไซซ์ ผลลัพธ์คือจาก 5 entity กลายเป็น <b>6 ตาราง</b>ในฐานข้อมูลจริง"</div>
+
+<h2>สไลด์ 4 · ER Diagram <span class="speak">ผู้พูด B</span></h2>
+<div class="quote">"ความสัมพันธ์มี 6 แบบ มากกว่าเกณฑ์ขั้นต่ำ 3 แบบ: users→orders และ orders→order_items, products→order_items, users/products→cart_items เป็น 1:N ทั้ง 5 แบบ และจุดสำคัญที่สุดคือ <b>M:N ระหว่าง USER กับ PRODUCT ผ่านการกดถูกใจ</b> — ผู้ใช้ถูกใจได้หลายชิ้น สินค้าชิ้นหนึ่งก็ถูกใจโดยหลายคน ซึ่งถูกแปลงเป็นตารางชื่อ favorites ที่มี composite primary key"</div>
+
+<h2>สไลด์ 5 · ER → Relation Schema (PK/FK) <span class="speak">ผู้พูด B</span></h2>
+<div class="quote">"แต่ละตารางแสดง PK/FK ชัดเจน — orders มี id เป็น PK และ user_id เป็น FK ไป users.id; order_items มี FK สองตัว คือ order_id ไป orders และ product_id ไป products; cart_items มี UNIQUE constraint กันใส่สินค้าเงื่อนไขเดียวกันซ้ำ"</div>
+<div class="quote">"จุดที่สำคัญคือ FK ของเรา<b>บังคับใช้จริง</b> — เราเปิด <code>PRAGMA foreign_keys = ON</code> ใน SQLite ทำให้ FK ถูกตรวจทั้งตอน seed และตอน Back Office ทำ Insert/Update ถ้าลบ order ที่มี order_items อยู่ ฐานข้อมูลจะ block ทันที"</div>
+
+<h2>สไลด์ 6 · Normalization <span class="speak">ผู้พูด A</span></h2>
+<div class="quote">"<b>1NF</b> ผ่าน — เก็บค่า atomic ไม่มีกลุ่มข้อมูลซ้ำในช่องเดียว และมี PK ทุกตาราง <b>2NF</b> ผ่าน — ตารางเดียวที่ใช้ composite key คือ favorites และไม่มี attribute ที่พึ่งพา key บางส่วน <b>3NF</b> ผ่าน — ไม่มี transitive dependency ชื่อ/ราคาสินค้าไม่ถูกเก็บซ้ำในตารางอื่น ส่วน unit_price คือ 'ราคา ณ ขณะสั่งซื้อ' เป็นเงื่อนไขธุรกิจ ไม่ใช่ dependency ต่อจากราคาปัจจุบัน"</div>
+
+<h2>สไลด์ 7 · Data Dictionary <span class="speak">ผู้พูด A</span></h2>
+<div class="quote">"ตัวอย่างเช่น products มี id เป็น PK, name, price, category, stock, รูป และกลุ่ม variant; order_items เชื่อม orders กับ products ด้วย FK สองตัว; users มี email เป็น UNIQUE และรหัสผ่านเก็บเป็น <b>hash ไม่เก็บ plain text</b> — ฉบับเต็มทั้ง 6 ตารางอยู่ในรายงานหัวข้อ 8"</div>
+
+<h2>สไลด์ 8 · System &amp; API <span class="speak">ผู้พูด B</span></h2>
+<div class="quote">"สถาปัตยกรรมคือ แอปหน้าร้าน Flutter สื่อสารผ่าน HTTP/JSON ไปที่ Backend ชื่อ <b>FastAPI (Python)</b> และจัดการข้อมูลใน SQLite ฐานข้อมูลเดียว — Back Office ก็เป็นหน้าเว็บที่ใช้ <b>API ชุดเดียวกัน</b> ไม่แตะฐานข้อมูลข้ามทาง"</div>
+<div class="quote">"API หลัก: GET /products, POST /register และ /login, POST /cart และ /checkout, GET/POST/DELETE /favorites และ <b>GET/POST/PUT/DELETE บน /admin/t/{table}</b> คือ Back Office CRUD ทุกตารางครับ"</div>
+
+<h2>สไลด์ 9 · Back Office Demo <span class="speak">ผู้พูด B</span></h2>
+<div class="quote">"สาธิตตามปุ่ม: <b>แสดง/ค้นหา</b> — แท็บ 6 ตาราง + ช่องค้นหา + การ์ดจำนวนแถว; <b>เพิ่ม</b> — ฟอร์มแถวใหม่ บันทึกแล้วตรวจ FK; <b>แก้ไข</b> — แถวกลายเป็น input บันทึกจริงลงตาราง; <b>ลบ</b> — ยืนยันก่อนและรองรับ composite key ของ favorites คลิปแนบใช้เวลา 59 วินาที อยู่ในเกณฑ์ไม่เกิน 1 นาที"</div>
+
+<h2>สไลด์ 10 · สรุป + วิธีติดตั้ง <span class="speak">ผู้พูด A</span></h2>
+<div class="quote">"สรุป: ระบบมี 6 ตาราง เกินเกณฑ์ 5 entity · ความสัมพันธ์ 6 แบบ เกินเกณฑ์ 3 แบบ · ทุกตาราง ≥ 50 แถวจากข้อมูลรวบรวมเอง + web scraping · PK/FK บังคับจริง ผ่าน 3NF · Back Office CRUD ได้จริงทุกตาราง · Source Code + README อยู่บน GitHub"</div>
+<div class="quote">"วิธีติดตั้งบนเครื่องอื่น: <code>pip install -r backend/requirements.txt</code> แล้ว <code>uvicorn main:app --port 8000</code> ระบบจะสร้างและ seed ฐานข้อมูล fashion.db เอง เข้า Back Office ที่ <code>127.0.0.1:8000/admin</code> — ขอบคุณครับ/ค่ะ ยินดีตอบคำถาม"</div>
+
+<div style="page-break-before:always"></div>
+
+<h1>ชุดคำถามจี้ของอาจารย์ + บทตอบ</h1>
+<p class="note">เรียงตามความโหด — Q1–Q4 พื้นฐานต้องตอบทันที · Q5–Q9 จี้รายละเอียด · Q10–Q14 เหตุผลระยะยาว</p>
+
+<h3><span class="badge">Q1</span> ทำไมตารางเป็น 6 ทั้งที่ Entity มีแค่ 5?</h3>
+<p>เพราะ ORDER ITEM เป็นตารางเชื่อมที่แยกออกมาจากความสัมพันธ์ ORDER–PRODUCT — หนึ่งคำสั่งซื้อมีสินค้าได้ <b>หลายชิ้นหลายไซซี</b> จึงต้องแยกเป็นตารางเอง</p>
+
+<h3><span class="badge">Q2</span> ผู้ใช้กับสินค้าที่ "ถูกใจ" เป็น M:N รู้ได้ยังไง?</h3>
+<p>จาก business rule — ผู้ใช้หนึ่งคนถูกใจได้หลายชิ้น และสินค้าหนึ่งชิ้นถูกใจโดยหลายคน จึงเป็น M:N และถูกแปลงเป็นตาราง <b>favorites</b></p>
+
+<h3><span class="badge">Q3</span> PK ของ favorites อยู่ตรงไหน ทำไมมีสองคอลัมน์?</h3>
+<p>เป็น <b>composite PK (user_id, product_id)</b> — หนึ่งแถว = หนึ่งคนกับหนึ่งสินค้า ใช้คอลัมน์เดียวไม่ได้เพราะแต่ละฝั่งยังซ้ำได้</p>
+
+<h3><span class="badge">Q4</span> Normalization ผ่านถึงไหน?</h3>
+<p>ทุกตารางผ่าน <b>3NF</b> — 1NF เก็บ atomic มี PK ครบ · 2NF ไม่มี partial dependency (composite table เดียวคือ favorites) · 3NF ไม่มี transitive dependency</p>
+
+<h3><span class="badge">Q5 ⭐</span> unit_price เก็บราคาซ้ำ — ไม่ใช่ 3NF แล้วหรือเปล่า?</h3>
+<p>ตอบสำคัญที่สุด: unit_price คือ <b>ราคา ณ ขณะสั่งซื้อ (historical fact)</b> — ถ้า reference ไป products.price เฉย ๆ พอร้านแก้ราคา/จัดโปรฯ ใบสั่งซื้อเก่าจะบิดเบือนทันที มันไม่ใช่ transitive dependency เพราะความหมายทางธุรกิจต่างกัน</p>
+
+<h3><span class="badge">Q6</span> รหัสผ่านเก็บยังไง อัลกอริทึมอะไร?</h3>
+<p>เก็บเป็น <b>password_hash ไม่เก็บ plain text</b> — เรา hash ด้วย bcrypt ก่อนบันทึกตามหลักความปลอดภัยข้อมูล</p>
+
+<h3><span class="badge">Q7</span> บอกว่า FK บังคับจริง — จะพิสูจน์ยังไง?</h3>
+<p>เราเปิด <code>PRAGMA foreign_keys = ON</code> — ลบ order ที่มี order_items อยู่ จะได้ error <b>FOREIGN KEY constraint failed</b> ทันที ทดลองสดใน DB Browser ได้เลย และดูผลตรวจสอบรวมด้วย <code>PRAGMA foreign_key_check</code> (ผล = 0 แถว, สะอาด)</p>
+
+<h3><span class="badge">Q8</span> ทำไมเลือก SQLite ไม่ใช้ MySQL/PostgreSQL?</h3>
+<p>โปรเจกต์นี้เป็นเชิงสาธิต — <b>ไม่ต้องติดตั้งเซิร์ฟเวอร์แยก</b>, ยังรองรับ PK/FK/constraint ที่เราต้องใช้ครบ, และลิงก์เชื่อมระบบเดิมไป migrate ต่อได้ เพราะเรามีไฟล์ <code>database_export_mysql.sql</code> พร้อม import ใน repo — schema/API ไม่ผูกขาดกับ SQLite</p>
+
+<h3><span class="badge">Q9</span> ข้อมูลจาก web scraping — แค่ copy ของคนอื่นได้?</h3>
+<p>เราแยกชัด: สินค้า (ชื่อ/ราคา/หมวด/รูปสาธารณะ) มาจาก <b>self-collected + web scraping</b> ตามเกณฑ์ แล้วจัดกลุ่ม variant/หมวดเอง ส่วน users/orders/cart/favorites สร้างใหม่ทั้งหมดเพื่อจำลองระบบ — ไม่มีข้อมูลจริงของบุคคลใด</p>
+
+<h3><span class="badge">Q10</span> ถ้ามี 100,000 ลูกค้าสั่งซื้อพร้อมกัน SQLite ไหวไหม?</h3>
+<p>SQLite มีข้อจำกัดเรื่อง write concurrency — แต่เราเตรียม path ย้ายไป MySQL/PostgreSQL แล้ว (มี export แล้ว) โครง schema และ API รองรับการเปลี่ยน database โดยแก้แค่ connection</p>
+
+<h3><span class="badge">Q11</span> ผู้ใช้จะมองเห็น order ของคนอื่นได้ไหม?</h3>
+<p>Endpoint <code>GET /orders</code> กรองตาม user_id ของ session ที่ login เท่านั้น — เห็นทุกคนได้เฉพาะใน Back Office เพราะเป็นสิทธิทีมหลังบ้าน</p>
+
+<h3><span class="badge">Q12</span> ลบ product ที่ถูก order อยู่ จะเกิดอะไรขึ้น?</h3>
+<p>ฐานข้อมูล block เพราะมี FK ชี้มาจาก order_items/cart_items/favorites — จะได้ FOREIGN KEY constraint failed ใน UI เราจึงไม่ให้ลบสินค้าที่มีประวัติการขายดีกว่าปิดการขาย</p>
+
+<h3><span class="badge">Q13</span> cart_items ใช้ UNIQUE ไม่ทำ composite PK เหมือน favorites — ทำไม?</h3>
+<p>ใส่ id (auto-increment) เป็น PK เพราะแถวของ cart มี lifecycle (ต้องแก้ quantity) ไม่เหมือน favorites ที่เป็น relation แท้ ๆ — แต่กันซ้ำครบด้วย <code>UNIQUE(user_id, product_id, size, color)</code></p>
+
+<h3><span class="badge">Q14</span> ถ้าเพิ่มระบบ coupon / loyalty ต้องแก้โครงสร้างอะไร?</h3>
+<p>เพิ่ม entity ใหม่ — COUPON (orders มี FK coupon_id, NULL ได้) และตาราง loyalty_points (FK ไป users/orders) — โครงสร้างเดิม 6 ตารางยังใช้ได้ เป็นแบบ extensible</p>
+
+<h2>5 จุดจี้ที่ต้องเป็นเจ้าของให้ได้</h2>
+<ul>
+<li><b>unit_price</b> ใน order_items — ตอบด้วยแนวคิด "ราคาบันทึกขณะสั่งซื้อ" (Q5)</li>
+<li><b>Composite PK ของ favorites</b> — ตอบว่า relation จริงไม่มี id ยิงเดี่ยว (Q3, Q13)</li>
+<li><b>FK บังคับจริง</b> — เตรียมโชว์ <code>PRAGMA foreign_keys</code> + ลบเออร์เรอร์จริง ใน DB Browser (Q7, Q12)</li>
+<li><b>เหตุผลเลือก SQLite หรือหลักฐาน migrate ต่อ</b> (Q8, Q10)</li>
+<li><b>เดโม่จริง</b> — ต้องเปิด Back Office + DB Browser โชว์ได้หน้าชั้น</li>
+</ul>
+
+<h2>ประโยครับมือถ้าไม่รู้คำตอบ</h2>
+<table>
+<tr><th>สถานการณ์</th><th>ประโยคที่พูดได้</th></tr>
+<tr><td>ไม่แน่ใจข้อมูลเฉพาะ</td><td>"ข้อมูลเชิงรายละเอียดอยู่ในรายงานหัวข้อ 8 ครับ — ขออนุญาตเปิดแล้วตอบตามจริง"</td></tr>
+<tr><td>ไม่รู้รายละเอียดจริง</td><td>"ยังไม่ได้ implement ครับ แต่ตามหลักที่เราเรียน X คือ ... ถ้าให้ออกแบบผมจะทำด้วยวิธี ..."</td></tr>
+<tr><td>รู้ว่าตัวเองผิด</td><td>"ตรงนี้เป็นจุดอ่อนจริงครับ ถ้าพัฒนาต่อผมจะปรับเป็น ..."</td></tr>
+</table>
+
+<h2>เทคนิคในการพรีเซ็น</h2>
+<ul>
+<li>ถ้าเวลาน้อยตัดสไลด์ 5, 6, 7 ให้ย่อเหลือ 1 ประโยค: "PK/FK บังคับจริงทุกตาราง และผ่าน 3NF ครับ"</li>
+<li>ไฟล์คิวรีสาธิต <code>backend/demo_queries.sql</code> พร้อมจะเปิดใน DB Browser ถ้าอาจารย์ขอดู query จริง</li>
+<li>มีหน้าโชว์เลข: สินค้า 66 · ผู้ใช้ 51 · คำสั่งซื้อ 58 · รายการสั่งซื้อ 111 · ตะกร้า 52 · ถูกใจ 52 (สไลด์ 2 + Back Office หน้าแรก)</li>
+</ul>
+
+<p style="margin-top:24px"><small>ดาวน์โหลด: Source Code จาก GitHub (mood-wear) · Back Office ที่ http://127.0.0.1:8000/admin · ภาคการศึกษา 2569</small></p>
+
+</body>
+</html>

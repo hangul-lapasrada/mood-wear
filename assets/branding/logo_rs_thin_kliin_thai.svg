@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="รสถิ่น กลิ่นไทย">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Srisakdi:wght@700&amp;display=swap');
+    </style>
+
+    <!-- Flame-colour gradient for the lettering -->
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"  stop-color="#f4813f"/>
+      <stop offset="0.45" stop-color="#eb5b24"/>
+      <stop offset="1"  stop-color="#d63a12"/>
+    </linearGradient>
+
+    <!-- Smoke: turbulence wisp, light warm grey -->
+    <filter id="smoke" x="-40%" y="-120%" width="180%" height="300%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="3" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="46" xChannelSelector="R" yChannelSelector="G" result="wisp"/>
+      <feGaussianBlur in="wisp" stdDeviation="5" result="blur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.55" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- Heat shimmer on the letters themselves -->
+    <filter id="shimmer" x="-5%" y="-5%" width="110%" height="115%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9 0.03" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- Soft glow behind the letters -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+
+    <!-- Mask that fades smoke out as it rises -->
+    <linearGradient id="risefade" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0"   stop-color="#fff" stop-opacity="1"/>
+      <stop offset="0.55" stop-color="#fff" stop-opacity="0.4"/>
+      <stop offset="1"   stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="fadesmoke">
+      <rect x="0" y="150" width="800" height="620" fill="url(#risefade)"/>
+    </mask>
+
+    <!-- Spark symbols -->
+    <path id="spark" d="M0 -7 C1.6 -2.4 2.4 -1.6 7 0 C2.4 1.6 1.6 2.4 0 7 C-1.6 2.4 -2.4 1.6 -7 0 C-2.4 -1.6 -1.6 -2.4 0 -7 Z"/>
+  </defs>
+
+  <!-- Brand olive field -->
+  <rect width="800" height="800" fill="#6b6b3a"/>
+
+  <!-- Warm glow behind the word block -->
+  <ellipse cx="400" cy="400" rx="250" ry="190" fill="#eb5b24" opacity="0.10" filter="url(#glow)"/>
+
+  <!-- Smoke underlay: same lettering, blurred + displaced, reading as steam -->
+  <g mask="url(#fadesmoke)" opacity="0.5">
+    <text x="400" y="365" text-anchor="middle"
+          font-family="'Srisakdi', serif" font-weight="700" font-size="118"
+          fill="#efe3c6" filter="url(#smoke)">รสถิ่น</text>
+    <text x="400" y="520" text-anchor="middle"
+          font-family="'Srisakdi', serif" font-weight="700" font-size="118"
+          fill="#efe3c6" filter="url(#smoke)">กลิ่นไทย</text>
+  </g>
+
+  <!-- Main lettering -->
+  <g filter="url(#shimmer)">
+    <text x="400" y="368" text-anchor="middle"
+          font-family="'Srisakdi', serif" font-weight="700" font-size="118"
+          fill="url(#flame)">รสถิ่น</text>
+    <text x="400" y="523" text-anchor="middle"
+          font-family="'Srisakdi', serif" font-weight="700" font-size="118"
+          fill="url(#flame)">กลิ่นไทย</text>
+  </g>
+
+  <!-- Charcoal sparks rising around the smoke -->
+  <g fill="#f4a13a" opacity="0.9">
+    <use href="#spark" transform="translate(565 258) scale(1.15)" opacity="0.95"/>
+    <use href="#spark" transform="translate(596 205) scale(0.8)"  opacity="0.75"/>
+    <use href="#spark" transform="translate(230 250) scale(0.95)" opacity="0.8"/>
+    <use href="#spark" transform="translate(204 195) scale(0.6)"  opacity="0.55"/>
+    <use href="#spark" transform="translate(620 320) scale(0.6)"  opacity="0.6"/>
+    <use href="#spark" transform="translate(180 330) scale(0.7)"  opacity="0.5"/>
+  </g>
+
+  <!-- Griddle line: a wok handle bar that grounds the mark like a stall sign -->
+  <g stroke="#f4a13a" stroke-linecap="round">
+    <line x1="255" y1="590" x2="545" y2="590" stroke-width="7"/>
+    <line x1="292" y1="590" x2="262" y2="612" stroke-width="5"/>
+    <line x1="400" y1="590" x2="400" y2="612" stroke-width="5"/>
+    <line x1="508" y1="590" x2="538" y2="612" stroke-width="5"/>
+  </g>
+  <!-- Awning stripes hint (Thai roadside stall)
+  <g transform="translate(255 630)">
+    <rect x="0" y="0" width="290" height="14" fill="#eb5b24"/>
+    <rect x="20"  y="0" width="44" height="14" fill="#efe3c6"/>
+    <rect x="108" y="0" width="44" height="14" fill="#efe3c6"/>
+    <rect x="196" y="0" width="44" height="14" fill="#efe3c6"/>
+  </g> -->
+</svg>

@@ -44,7 +44,7 @@ INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vord
 INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vorder) VALUES (28, 'Adidas Samba OG — Variation 08 — Colorway Collection', 5400, 'Shoes', 16, 'products/B75807-adidas-samba-og-black-white-gum-1.jpg.webp', 'samba-x8', 'Colorway 8', 8);
 INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vorder) VALUES (29, 'Adidas Samba OG — Variation 09 — Colorway Collection', 5600, 'Shoes', 17, 'products/adidas-samba-og-core-white-halo-blue-1.jpg.webp', 'samba-x9', 'Colorway 9', 9);
 INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vorder) VALUES (30, 'Adidas Samba OG — Variation 10 — Colorway Collection', 5200, 'Shoes', 18, 'products/B75807-adidas-samba-og-black-white-gum-1.jpg.webp', 'samba-x10', 'Colorway 10', 10);
-INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vorder) VALUES (31, 'AMI Paris Ami De Coeur Tee — Seasonal Print 01', 1990, 'Upper', 13, 'products/BFUTS035-724-0951-ami-paris-cotton-ami-de-coeur-t-shirt-heather-ash-grey-1.jpg.webp', 'ami-x1', 'Print 1', 1);
+INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vorder) VALUES (31, 'AMI Paris Ami De Coeur Tee — Seasonal Print 01', 1990, 'Upper', 12, 'products/BFUTS035-724-0951-ami-paris-cotton-ami-de-coeur-t-shirt-heather-ash-grey-1.jpg.webp', 'ami-x1', 'Print 1', 1);
 INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vorder) VALUES (32, 'AMI Paris Ami De Coeur Tee — Seasonal Print 02', 2140, 'Upper', 14, 'products/BFUTS035-724-100-ami-de-coeur-oragnic-cotton-jersey-t-shirt-white-1.jpg.webp', 'ami-x2', 'Print 2', 2);
 INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vorder) VALUES (33, 'AMI Paris Ami De Coeur Tee — Seasonal Print 03', 2290, 'Upper', 15, 'products/BFUTS035-724-430-ami-paris-cotton-ami-de-coeur-t-shirt-navy-blue-1.jpg.webp', 'ami-x3', 'Print 3', 3);
 INSERT INTO products (id, name, price, category, stock, img, vgroup, vname, vorder) VALUES (34, 'AMI Paris Ami De Coeur Tee — Seasonal Print 04', 2440, 'Upper', 16, 'products/BFUTS035-724-001-ami-paris-de-coeur-t-shirt-black-1.jpg.webp', 'ami-x4', 'Print 4', 4);
@@ -133,7 +133,6 @@ INSERT INTO users (id, username, email, phone, password_hash) VALUES (50, 'Tara_
 INSERT INTO users (id, username, email, phone, password_hash) VALUES (51, 'Namtan_u051', 'namtan_u051@gmail.com', '0812345051', 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f');
 INSERT INTO orders (id, user_id, address, total, created_at) VALUES (1, 1, 'าำกาไกๆา', 790, '2026-10-28 16:37:59');
 INSERT INTO orders (id, user_id, address, total, created_at) VALUES (2, 1, 'ทท', 1290, '2026-10-28 16:38:36');
-INSERT INTO orders (id, user_id, address, total, created_at) VALUES (3, 1, '`บ้านซี', 7290, '2026-10-28 17:04:02');
 INSERT INTO orders (id, user_id, address, total, created_at) VALUES (4, 1, 'Test house 12', 5200, '2026-10-29 11:29:18');
 INSERT INTO orders (id, user_id, address, total, created_at) VALUES (5, 1, 'าาา', 4980, '2026-10-30 06:22:05');
 INSERT INTO orders (id, user_id, address, total, created_at) VALUES (6, 1, 'ศิลปากร', 1890, '2026-10-30 06:30:08');
@@ -189,6 +188,7 @@ INSERT INTO orders (id, user_id, address, total, created_at) VALUES (55, 50, '88
 INSERT INTO orders (id, user_id, address, total, created_at) VALUES (56, 51, '2 Charoen Krung Rd, Bangkok', 28540, '2026-10-22 07:59:00');
 INSERT INTO orders (id, user_id, address, total, created_at) VALUES (57, 2, '2 Charoen Krung Rd, Bangkok', 57090, '2026-10-23 14:10:00');
 INSERT INTO orders (id, user_id, address, total, created_at) VALUES (58, 3, '45 Nimman Rd, Chiang Mai', 12900, '2026-10-24 21:21:00');
+INSERT INTO orders (id, user_id, address, total, created_at) VALUES (59, NULL, 'ฮาทชาย', 1990, '2026-11-04 07:23:17');
 INSERT INTO order_items (id, order_id, product_id, quantity, size, color, unit_price) VALUES (1, 1, 8, 1, 'XXL', 'Yellow', 790);
 INSERT INTO order_items (id, order_id, product_id, quantity, size, color, unit_price) VALUES (2, 2, 2, 1, 'XS', 'Blue', 1290);
 INSERT INTO order_items (id, order_id, product_id, quantity, size, color, unit_price) VALUES (3, 3, 4, 1, 'One Size', 'White / Better Scarlet', 5200);
@@ -300,6 +300,7 @@ INSERT INTO order_items (id, order_id, product_id, quantity, size, color, unit_p
 INSERT INTO order_items (id, order_id, product_id, quantity, size, color, unit_price) VALUES (109, 57, 62, 3, '9 US', 'White', 13750);
 INSERT INTO order_items (id, order_id, product_id, quantity, size, color, unit_price) VALUES (110, 57, 37, 3, 'M', 'White', 2290);
 INSERT INTO order_items (id, order_id, product_id, quantity, size, color, unit_price) VALUES (111, 58, 17, 1, '9 US', '', 12900);
+INSERT INTO order_items (id, order_id, product_id, quantity, size, color, unit_price) VALUES (112, 59, 31, 1, 'M', 'Print 1', 1990);
 INSERT INTO cart_items (id, user_id, product_id, quantity, size, color) VALUES (1, 2, 1, 1, 'S', '');
 INSERT INTO cart_items (id, user_id, product_id, quantity, size, color) VALUES (2, 3, 2, 2, 'M', 'Black');
 INSERT INTO cart_items (id, user_id, product_id, quantity, size, color) VALUES (3, 4, 3, 3, 'L', 'White');
@@ -405,3 +406,29 @@ INSERT INTO favorites (user_id, product_id, created_at) VALUES (49, 66, '2026-10
 INSERT INTO favorites (user_id, product_id, created_at) VALUES (50, 7, '2026-10-21 09:48:00');
 INSERT INTO favorites (user_id, product_id, created_at) VALUES (51, 14, '2026-10-22 09:49:00');
 SET FOREIGN_KEY_CHECKS=1;
+
+-- ══ Views สำหรับอ่านข้อมูลแบบเห็นชื่อ (ไม่ต้องจำรหัส) ══
+CREATE OR REPLACE VIEW v_orders AS
+SELECT o.id, o.user_id, u.username AS user_name, o.address, o.total, o.created_at
+FROM orders o LEFT JOIN users u ON u.id = o.user_id;
+
+CREATE OR REPLACE VIEW v_order_items AS
+SELECT oi.id, oi.order_id, u.username AS user_name, oi.product_id, p.name AS product_name,
+       oi.quantity, oi.size, oi.color, oi.unit_price
+FROM order_items oi
+LEFT JOIN orders o ON o.id = oi.order_id
+LEFT JOIN users u ON u.id = o.user_id
+LEFT JOIN products p ON p.id = oi.product_id;
+
+CREATE OR REPLACE VIEW v_cart_items AS
+SELECT ci.id, ci.user_id, u.username AS user_name, ci.product_id, p.name AS product_name,
+       ci.quantity, ci.size, ci.color
+FROM cart_items ci
+LEFT JOIN users u ON u.id = ci.user_id
+LEFT JOIN products p ON p.id = ci.product_id;
+
+CREATE OR REPLACE VIEW v_favorites AS
+SELECT f.user_id, u.username AS user_name, f.product_id, p.name AS product_name, f.created_at
+FROM favorites f
+LEFT JOIN users u ON u.id = f.user_id
+LEFT JOIN products p ON p.id = f.product_id;

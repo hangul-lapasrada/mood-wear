@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Mood Wear — Navigation Flow</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Noto Sans Thai","Thonburi",Sukhumvit,Tahoma,sans-serif;background:#fff;padding:26px 30px;width:1160px}
+h1{font-size:20px;margin-bottom:3px}
+.sub{font-size:11px;color:#666;margin-bottom:16px}
+.tabs{display:flex;gap:10px;justify-content:center;margin-bottom:14px}
+.tab{border:1.4px solid #6d28d9;background:#efe7fb;border-radius:20px;padding:6px 18px;font-size:11px;color:#4c1d95}
+.tab.on{background:#6d28d9;color:#fff}
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:start}
+.col{display:flex;flex-direction:column;align-items:center;gap:0}
+.node{border:1.4px solid #111;border-radius:9px;background:#fff;padding:8px 10px;font-size:11px;line-height:1.4;text-align:center;width:100%}
+.node b{display:block;font-size:11.5px;margin-bottom:1px}
+.node small{display:block;font-size:8.5px;color:#666;margin-top:3px}
+.node.dark{background:#111;color:#fff;border-color:#111}
+.node.dark small{color:#cfcfcf}
+.node.accent{background:#efe7fb;border-color:#6d28d9}
+.node.accent b{color:#4c1d95}
+.ar{font-size:14px;color:#8a8a8a;line-height:1;padding:5px 0}
+.band{margin-top:22px;border-top:1px dashed #c9c9c9;padding-top:18px}
+.band h2{font-size:12px;color:#444;margin-bottom:12px;letter-spacing:.02em}
+.flow{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:nowrap}
+.flow .node{width:auto;flex:0 0 auto;min-width:120px}
+.flow .ar{padding:0 8px}
+.flow .step{font-size:9px;color:#666;background:#f4f4f4;border-radius:10px;padding:2px 8px;margin-right:6px;white-space:nowrap}
+.legend{margin-top:16px;font-size:9.5px;color:#666}
+</style>
+</head>
+<body>
+<h1>Mood Wear — Navigation Flow</h1>
+<div class="sub">Bottom Navigation 5 แท็บ (ShopShell) · หน้าลูกเปิดด้วยการ push และกลับด้วยปุ่มย้อนกลับ</div>
+
+<div class="tabs">
+  <div class="tab on">Home</div>
+  <div class="tab">Style Studio</div>
+  <div class="tab">Search</div>
+  <div class="tab">Saved</div>
+  <div class="tab">Profile</div>
+</div>
+
+<div class="cols">
+  <div class="col">
+    <div class="node dark"><b>Home</b>แบนเนอร์ + แท็บหมวด<small>products</small></div>
+    <div class="ar">▼</div>
+    <div class="node"><b>รายการสินค้าตามหมวด</b>Top-Pick / Trending<small>products</small></div>
+    <div class="ar">▼</div>
+    <div class="node accent"><b>Product Detail</b>สี · ไซส์ · สต็อก · รีวิว<small>products · favorites · cart_items</small></div>
+  </div>
+
+  <div class="col">
+    <div class="node dark"><b>Style Studio</b>Mix &amp; Match your style<small>products</small></div>
+    <div class="ar">▼</div>
+    <div class="node accent"><b>Set Detail</b>ชุดที่ประกอบเอง + ราคารวม<small>products</small></div>
+    <div class="ar">▼</div>
+    <div class="node"><b>เพิ่มสินค้าทั้งชุดลงตะกร้า</b>PUT IN BASKET / BUY NOW</div>
+  </div>
+
+  <div class="col">
+    <div class="node dark"><b>Search</b>ช่องค้นหาสินค้า<small>products</small></div>
+    <div class="ar">▼</div>
+    <div class="node"><b>ผลลัพธ์การค้นหา</b>กรองตามคำค้น<small>products</small></div>
+    <div class="ar">▼</div>
+    <div class="node accent"><b>Product Detail</b>รายละเอียดสินค้า</div>
+  </div>
+
+  <div class="col">
+    <div class="node dark"><b>Saved</b>รายการที่กดถูกใจ<small>favorites · products</small></div>
+    <div class="ar">▼</div>
+    <div class="node"><b>ไอเท็มที่ถูกใจ</b>แตะเพื่อเปิดรายละเอียด</div>
+    <div class="ar">▼</div>
+    <div class="node accent"><b>Product Detail</b>กดหัวใจเพื่อยกเลิกถูกใจ</div>
+  </div>
+
+  <div class="col">
+    <div class="node dark"><b>Profile</b>บัญชีผู้ใช้<small>users</small></div>
+    <div class="ar">▼</div>
+    <div class="node"><b>Login</b>อีเมล + รหัสผ่าน</div>
+    <div class="ar">⇅</div>
+    <div class="node"><b>Register</b>สมัครสมาชิกใหม่<small>users (password_hash)</small></div>
+  </div>
+</div>
+
+<div class="band">
+  <h2>เส้นทางร่วมของทุกหน้า: ตะกร้า → สั่งซื้อ</h2>
+  <div class="flow">
+    <div class="node accent"><b>Product Detail / Set Detail</b>เลือกสี ไซส์ จำนวน</div>
+    <span class="step">POST /cart</span>
+    <div class="ar">▶</div>
+    <div class="node"><b>Basket</b>ปรับจำนวน · ที่อยู่ · ยอดรวม<small>cart_items · products</small></div>
+    <span class="step">POST /orders</span>
+    <div class="ar">▶</div>
+    <div class="node dark"><b>Checkout สำเร็จ</b>สร้างคำสั่งซื้อ<small>orders · order_items</small></div>
+  </div>
+</div>
+
+<div class="legend">สีเข้ม = แท็บหลัก (bottom navigation) · สีม่วง = หน้าลูกที่สำคัญ (Product Detail / Set Detail) · สีขาว = หน้าลูกอื่น ๆ · แถบด้านล่าง = เส้นทางตะกร้าและการสั่งซื้อที่ทุกหน้าใช้ร่วมกัน</div>
+</body>
+</html>

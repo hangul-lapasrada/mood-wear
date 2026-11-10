@@ -1,11 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import sqlite3, hashlib, os, random
 random.seed(2569)
 DB=os.path.join(os.path.dirname(__file__),'fashion.db')
 app=FastAPI(title='Mood Wear API')
+# รูปสินค้าใน assets/products ใช้แสดง thumbnail ใน Back Office
+ASSETS=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'assets')
+if os.path.isdir(ASSETS):app.mount('/assets',StaticFiles(directory=ASSETS),name='assets')
 app.add_middleware(CORSMiddleware,allow_origins=['*'],allow_methods=['*'],allow_headers=['*'])
 def hashed(s):return hashlib.sha256(s.encode()).hexdigest()
 def conn():
@@ -243,17 +247,83 @@ ADMIN={
  'order_items':{'pk':'id','cols':['order_id','product_id','quantity','size','color','unit_price']},
  'cart_items':{'pk':'id','cols':['user_id','product_id','quantity','size','color']},
  'favorites':{'pk':None,'cols':['user_id','product_id','created_at']}}
+# Readable list views: join users/products so the Back Office shows names,
+# while the stored schema keeps only the numeric foreign keys.
+ADMIN_SQL={
+ 'products':'SELECT * FROM products',
+ 'users':'SELECT * FROM users',
+ 'orders':"""SELECT o.id,o.user_id,u.username AS user_name,u.email AS user_email,
+   o.address,o.total,o.created_at,
+   (SELECT COUNT(*) FROM order_items oi WHERE oi.order_id=o.id) AS items_count,
+   (SELECT GROUP_CONCAT(x.img,'|') FROM (SELECT p.img FROM order_items oi
+     JOIN products p ON p.id=oi.product_id WHERE oi.order_id=o.id
+     ORDER BY oi.id LIMIT 4) x) AS item_imgs
+   FROM orders o LEFT JOIN users u ON u.id=o.user_id""",
+ 'order_items':"""SELECT oi.id,oi.order_id,o.user_id,u.username AS user_name,
+   ('#'||oi.order_id||' · '||COALESCE(u.username,'—')) AS order_ref,
+   oi.product_id,p.name AS product_name,p.img AS product_img,oi.quantity,oi.size,oi.color,oi.unit_price
+   FROM order_items oi LEFT JOIN orders o ON o.id=oi.order_id
+   LEFT JOIN users u ON u.id=o.user_id LEFT JOIN products p ON p.id=oi.product_id""",
+ 'cart_items':"""SELECT ci.id,ci.user_id,u.username AS user_name,ci.product_id,
+   p.name AS product_name,p.img AS product_img,ci.quantity,ci.size,ci.color
+   FROM cart_items ci LEFT JOIN users u ON u.id=ci.user_id
+   LEFT JOIN products p ON p.id=ci.product_id""",
+ 'favorites':"""SELECT f.user_id,u.username AS user_name,f.product_id,
+   p.name AS product_name,p.img AS product_img,f.created_at
+   FROM favorites f LEFT JOIN users u ON u.id=f.user_id
+   LEFT JOIN products p ON p.id=f.product_id"""}
+# คอลัมน์ชื่อที่เพิ่มจาก JOIN — ใช้ทั้งแสดงผลและค้นหา
+ADMIN_NAMES={'orders':['user_name','user_email'],
+ 'order_items':['user_name','product_name','order_ref'],
+ 'cart_items':['user_name','product_name'],
+ 'favorites':['user_name','product_name']}
 @app.get('/admin')
 def admin_page():return FileResponse(os.path.join(os.path.dirname(__file__),'admin.html'))
+@app.get('/admin/summary')
+def admin_summary():
+ with conn() as c:
+  g=lambda sql:c.execute(sql).fetchone()[0]
+  kpis={
+   'orders':g('SELECT COUNT(*) FROM orders'),
+   'revenue':g('SELECT COALESCE(SUM(total),0) FROM orders'),
+   'items':g('SELECT COALESCE(SUM(quantity),0) FROM order_items'),
+   'avg_order':round(g('SELECT COALESCE(AVG(total),0) FROM orders')),
+   'users':g('SELECT COUNT(*) FROM users'),
+   'products':g('SELECT COUNT(*) FROM products'),
+   'cart_value':g('SELECT COALESCE(SUM(p.price*ci.quantity),0) FROM cart_items ci JOIN products p ON p.id=ci.product_id'),
+   'favorites':g('SELECT COUNT(*) FROM favorites'),
+   'low_stock':g('SELECT COUNT(*) FROM products WHERE stock<=5'),
+   'stock_value':g('SELECT COALESCE(SUM(price*stock),0) FROM products')}
+  top_products=[dict(r) for r in c.execute("""SELECT p.id,p.name,p.img,SUM(oi.quantity) AS qty,
+    SUM(oi.quantity*oi.unit_price) AS revenue
+    FROM order_items oi JOIN products p ON p.id=oi.product_id
+    GROUP BY p.id ORDER BY qty DESC,revenue DESC LIMIT 8""")]
+  top_users=[dict(r) for r in c.execute("""SELECT u.id,u.username,COUNT(o.id) AS orders,
+    COALESCE(SUM(o.total),0) AS spent
+    FROM orders o JOIN users u ON u.id=o.user_id
+    GROUP BY u.id ORDER BY spent DESC LIMIT 8""")]
+  by_category=[dict(r) for r in c.execute("""SELECT p.category,SUM(oi.quantity) AS qty,
+    SUM(oi.quantity*oi.unit_price) AS revenue
+    FROM order_items oi JOIN products p ON p.id=oi.product_id
+    GROUP BY p.category ORDER BY revenue DESC""")]
+  daily=[dict(r) for r in c.execute("""SELECT substr(o.created_at,1,10) AS day,COUNT(*) AS orders,
+    COALESCE(SUM(o.total),0) AS revenue
+    FROM orders o WHERE o.created_at IS NOT NULL AND o.created_at<>''
+    GROUP BY day ORDER BY day DESC LIMIT 14""")][::-1]
+  recent=[dict(r) for r in c.execute("""SELECT o.id,u.username AS user_name,o.total,o.created_at,
+    (SELECT COUNT(*) FROM order_items oi WHERE oi.order_id=o.id) AS items_count
+    FROM orders o LEFT JOIN users u ON u.id=o.user_id ORDER BY o.id DESC LIMIT 5""")]
+ return {'kpis':kpis,'top_products':top_products,'top_users':top_users,
+         'by_category':by_category,'daily':daily,'recent':recent}
 @app.get('/admin/stats')
 def admin_stats():
  with conn() as c:return {t:c.execute('SELECT COUNT(*) FROM '+t).fetchone()[0] for t in ADMIN}
 @app.get('/admin/t/{t}')
 def admin_list(t:str,q:str|None=None):
  if t not in ADMIN:raise HTTPException(404,'Unknown table')
- s=ADMIN[t];sql='SELECT * FROM '+t;args=[]
+ s=ADMIN[t];cols=s['cols']+ADMIN_NAMES.get(t,[]);sql='SELECT * FROM ('+ADMIN_SQL[t]+')';args=[]
  if q and q.strip():
-  args=['%'+q+'%']*len(s['cols']);sql+=' WHERE '+' OR '.join(f"CAST({col} AS TEXT) LIKE ?" for col in s['cols'])
+  args=['%'+q+'%']*len(cols);sql+=' WHERE '+' OR '.join(f"CAST({col} AS TEXT) LIKE ?" for col in cols)
  sql+=' ORDER BY '+('user_id,product_id' if s['pk'] is None else s['pk'])+' LIMIT 300'
  with conn() as c:return [dict(r) for r in c.execute(sql,args)]
 @app.post('/admin/t/{t}')

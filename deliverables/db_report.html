@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Mood Wear — รายงานโครงงาน Database</title>
+<style>
+:root{--ink:#111;--mut:#666;--line:#e4e4e4;--soft:#f6f6f6}
+*{box-sizing:border-box}
+body{font-family:-apple-system,"Noto Sans Thai","Thonburi",Sukhumvit,Tahoma,sans-serif;color:var(--ink);font-size:13px;line-height:1.65;margin:0}
+@page{size:A4;margin:16mm}
+h1{font-size:22px;letter-spacing:.04em;margin:0 0 4px}
+h2{font-size:16px;margin:26px 0 8px;border-bottom:2px solid var(--ink);padding-bottom:5px;page-break-after:avoid}
+h3{font-size:13.5px;margin:16px 0 6px;page-break-after:avoid}
+tr{page-break-inside:avoid}
+p{margin:6px 0}
+table{border-collapse:collapse;width:100%;font-size:11.5px;margin:8px 0}
+th{border:1px solid #999;background:var(--soft);padding:5px 7px;text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em}
+td{border:1px solid var(--line);padding:5px 7px;vertical-align:top}
+code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:11.5px}
+pre{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:10.5px;line-height:1.55;overflow:hidden;white-space:pre-wrap}
+figure{margin:14px 0;text-align:center;page-break-inside:avoid}
+figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
+figcaption{font-size:10.5px;color:var(--mut);margin-top:5px}
+.two{display:flex;gap:10px}
+.two figure{flex:1;margin:6px 0}
+.cover{height:245mm;display:flex;flex-direction:column;justify-content:center;text-align:center;page-break-after:always}
+.cover .kicker{letter-spacing:.35em;font-size:11px;color:var(--mut);text-transform:uppercase}
+.cover h1{font-size:44px;letter-spacing:.08em;margin:18px 0 6px}
+.cover .sub{color:var(--mut);font-size:14px}
+.cover .meta{margin-top:40px;color:var(--mut);font-size:12px;line-height:2}
+.pb{page-break-before:always}
+.kv{display:inline-block;background:var(--soft);border-radius:6px;padding:2px 8px;margin:2px 2px;font-size:11.5px}
+ul{margin:6px 0 6px 18px;padding:0}
+small{color:var(--mut)}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Final Project · Digital Database · 802244</div>
+  <h1>MOOD WEAR</h1>
+  <div class="sub">ระบบฐานข้อมูลร้านค้าเสื้อผ้าแฟชั่น — เว็บแอปพลิเคชัน Back Office<br>พร้อมแดชบอร์ดสรุปยอดขาย และแอปพลิเคชันร้านค้า (Mobile / Web)</div>
+  <div class="meta">
+    วิชา 802244 : DIGITAL DATABASE · ภาคการศึกษา 2569<br>
+    ไฟล์: 69db_report_681310676_681310306.pdf<br>
+    ผู้นำเสนอ: นางสาว ลภัสรดา หาญกุล 681310676 · นายวรเศรษฐ์ บุญสวัสดิ์ 681310306
+  </div>
+</div>
+
+<h2>1. ชื่อระบบงาน</h2>
+<p>ระบบชื่อ <b>“Mood Wear”</b> เป็นระบบจัดการฐานข้อมูลร้านค้าเสื้อผ้าและสินค้าแฟชั่น ประกอบด้วย Web Application (Back Office)
+สำหรับทีมงานที่ทำการ <b>แสดงรายการข้อมูล, ค้นหา, เพิ่ม (Insert), แก้ไข (Update) และลบ (Delete)</b> ข้อมูลทุกตารางในฐานข้อมูล
+พร้อม <b>แดชบอร์ดสรุปยอดขาย</b> ที่คำนวณจากข้อมูลจริงในฐานข้อมูล และแอปพลิเคชันร้านค้าหน้าร้าน (Mobile / Web) ที่อ่านและเขียนข้อมูล
+ผ่าน REST API ชุดเดียวกันกับฐานข้อมูลเดียวกัน</p>
+
+<h2>2. ที่มาและแหล่งของข้อมูล</h2>
+<p>ระบบ Mood Wear เกิดจากทีมงานประสงค์จะจำลองร้านค้าแฟชั่นจริง ที่มีทั้งหน้าร้านสำหรับผู้ซื้อและหลังบ้านสำหรับผู้ดูแล จึงออกแบบฐานข้อมูลที่ใช้ร่วมกันในทุกช่องทาง และเตรียมชุดข้อมูลตัวอย่างจากข้อมูลสินค้าแฟชั่นจริง โดยเครื่องมือที่ใช้คือการรวบรวม/ทำสำเนารายการสินค้าเอง (Self-collected / Web Scraping) เพื่อให้ระบบมีข้อมูลเชิงสาธิตที่ใกล้เคียงความจริง</p>
+<p>ข้อมูลในระบบจัดเก็บไว้ครบทั้งหมด 6 ตาราง รวม 391 แถว (สินค้า 66 ชิ้น · ผู้ใช้ 51 คน · คำสั่งซื้อ 58 รายการ · รายการสินค้าในคำสั่งซื้อ 112 แถว · ตะกร้า 52 แถว · ถูกใจ 52 แถว) โดยมีความหลากหลายของข้อมูลทุกตารางตามเกณฑ์ของโครงงาน</p>
+<p class="mut">
+<b>แหล่งข้อมูลของระบบ:</b>
+<br>– ข้อมูลสินค้า (products) รวมถึงรูปสินค้า รวบรวมเองจากรายการเว็บไซต์และรูปภาพสินค้าสาธารณะ (Self-collected / Web Scraping) ประกอบด้วยหลายหมวดหมู่ ได้แก่ Shoes, Upper, Bottom, Hat, Accessories, Set และมีความหลากหลายของราคา, สต็อก, ตัวเลือกสินค้า (variant)
+<br>– ข้อมูลผู้ใช้ (users) และการสั่งซื้อ (orders / order_items) ข้อมูลตัวอย่างที่ทีมงานสร้างขึ้นเพื่อการทดสอบระบบ (ความหลากหลาย: ชื่อ, อีเมล, เบอร์โทร, ที่อยู่, ยอดรวม, วันที่)
+<br>– ข้อมูลตะกร้า (cart_items) และรายการที่ถูกใจ (favorites) เป็นข้อมูลที่เกิดจากพฤติกรรมผู้ใช้ในแอป
+</p>
+
+<h2>3. การออกแบบฐานข้อมูลในระดับโครงคิด (Conceptual Database Design)</h2>
+<h3>3.1 จำแนก Entity ของระบบ</h3>
+<p>จากการวิเคราะห์ระบบงานร้านเสื้อผ้าสามารถจำแนก Entity หลักได้ 5 Entity โดย Entity ทั้งหมดจะถูกแปลงเป็น 6 ตาราง (ORDER ITEM เป็น Entity เชื่อมแยกตารางต่างหาก)</p>
+<ul>
+<li><b>USER</b> — ผู้ใช้งานระบบ (สมาชิกร้าน)</li>
+<li><b>PRODUCT</b> — สินค้า (รวมตัวเลือกสินค้า variant)</li>
+<li><b>ORDER</b> — คำสั่งซื้อ</li>
+<li><b>CART ITEM</b> — สินค้าที่อยู่ในตะกร้า (การเลือกซื้อก่อนสั่ง)</li>
+<li><b>FAVORITE</b> — สินค้าที่ผู้ใช้ “ถูกใจ”</li>
+</ul>
+<p>โดยสินค้าในคำสั่งซื้อแต่ละรายการจะจำแนกเป็น order item ซึ่งเป็น Entity เชิงเส้นเชื่อม (associative entity) ที่แยกออกเป็นตารางเองเพื่อให้ 1 คำสั่งซื้อ มีสินค้าได้หลายรายการ</p>
+
+<h3>3.2 Attribute ของแต่ละ Entity</h3>
+<table>
+<tr><th>Entity</th><th>Attribute</th><th>หมายเหตุ</th></tr>
+<tr><td>USER</td><td>id, username, email, phone, password_hash</td><td>email ไม่ซ้ำกัน (unique)</td></tr>
+<tr><td>PRODUCT</td><td>id, name, price, category, stock, img, vgroup, vname, vorder</td><td>vgroup/vname/vorder ใช้จัดกลุ่ม variant ของสินค้าเดียวกัน</td></tr>
+<tr><td>ORDER</td><td>id, user_id, address, total, created_at</td><td>user_id เป็นเส้นเชื่อมไป USER</td></tr>
+<tr><td>ORDER ITEM</td><td>id, order_id, product_id, quantity, size, color, unit_price</td><td>order_id → ORDER, product_id → PRODUCT</td></tr>
+<tr><td>CART ITEM</td><td>id, user_id, product_id, quantity, size, color</td><td>user_id → USER, product_id → PRODUCT</td></tr>
+<tr><td>FAVORITE</td><td>user_id, product_id, created_at</td><td>user_id → USER, product_id → PRODUCT</td></tr>
+</table>
+
+<h3>3.3 ระบุ Primary Key และ Foreign Key</h3>
+<table>
+<tr><th>ตาราง</th><th>Primary Key</th><th>Foreign Key</th></tr>
+<tr><td>users</td><td><b>id</b></td><td>—</td></tr>
+<tr><td>products</td><td><b>id</b></td><td>—</td></tr>
+<tr><td>orders</td><td><b>id</b></td><td>user_id → users.id</td></tr>
+<tr><td>order_items</td><td><b>id</b></td><td>order_id → orders.id, product_id → products.id</td></tr>
+<tr><td>cart_items</td><td><b>id</b></td><td>user_id → users.id, product_id → products.id &nbsp;(ผู้ใช้ 1 สินค้า 1 ขนาด 1 สี ซ้ำไม่ได้ — UNIQUE constraint)</td></tr>
+<tr><td>favorites</td><td><b>(user_id, product_id)</b> — composite key</td><td>user_id → users.id, product_id → products.id</td></tr>
+</table>
+
+<h2 class="pb">4. การกระจายความสัมพันธ์ของ Entity และแบบแผนผังความสัมพันธ์</h2>
+<p>ความสัมพันธ์ที่ออกแบบมีทั้งหมด 6 แบบ (มากกว่าเกณฑ์ขั้นต่ำ 3 แบบ):</p>
+<table>
+<tr><th>#</th><th>ความสัมพันธ์</th><th>ประเภท</th><th>ความหมาย</th></tr>
+<tr><td>1</td><td>USER — ORDER</td><td>1 : N</td><td>ผู้ใช้หนึ่งคนสั่งซื้อได้หลายคำสั่งซื้อ</td></tr>
+<tr><td>2</td><td>ORDER — ORDER ITEM</td><td>1 : N</td><td>คำสั่งซื้อหนึ่งครั้งมีสินค้าได้หลายรายการ</td></tr>
+<tr><td>3</td><td>PRODUCT — ORDER ITEM</td><td>1 : N</td><td>สินค้าหนึ่งชิ้นปรากฏได้ในหลายรายการของคำสั่งซื้อ</td></tr>
+<tr><td>4</td><td>USER — CART ITEM</td><td>1 : N</td><td>ผู้ใช้หนึ่งคนมีสินค้าในตะกร้าได้หลายชิ้น</td></tr>
+<tr><td>5</td><td>PRODUCT — CART ITEM</td><td>1 : N</td><td>สินค้าหนึ่งชิ้นถูกใส่ตะกร้าโดยผู้ใช้ได้หลายคน</td></tr>
+<tr><td>6</td><td>USER — PRODUCT (ผ่าน FAVORITE)</td><td>M : N</td><td>ผู้ใช้หนึ่งคนถูกใจสินค้าได้หลายชิ้น และสินค้าชิ้นหนึ่งถูกใจโดยผู้ใช้ได้หลายคน</td></tr>
+</table>
+<p>ในการประมวลผลระบบปัจจุบัน M:N (ข้อ 6) ถูกแปลงเป็นตารางเชื่อม <b>favorites</b> ที่มี composite primary key (user_id, product_id)
+และระบบเปิดการบังคับ Foreign Key <code>PRAGMA foreign_keys = ON</code> จึงมีการตรวจสอบความถูกต้องของ FK ตั้งแต่ระดับตาราง</p>
+
+<h2>5. แปลงความสัมพันธ์ของ Entity เป็น Relation Schema (ER-to-Relation Mapping)</h2>
+<p>ผลการแปลงให้ Relation Schema ต่อไปนี้ (ใต้เส้น = Primary Key, ตัวเอียง = Foreign Key):</p>
+<table>
+<tr><td>Users</td><td>( <b><u>id</u></b>, username, email<font size="-1">[unique]</font>, phone, password_hash )</td></tr>
+<tr><td>Products</td><td>( <b><u>id</u></b>, name, price, category, stock, img, vgroup, vname, vorder )</td></tr>
+<tr><td>Orders</td><td>( <b><u>id</u></b>, <i>user_id</i> → Users.id, address, total, created_at )</td></tr>
+<tr><td>Order_items</td><td>( <b><u>id</u></b>, <i>order_id</i> → Orders.id, <i>product_id</i> → Products.id, quantity, size, color, unit_price )</td></tr>
+<tr><td>Cart_items</td><td>( <b><u>id</u></b>, <i>user_id</i> → Users.id, <i>product_id</i> → Products.id, quantity, size, color , UNIQUE(user_id, product_id, size, color) )</td></tr>
+<tr><td>Favorites</td><td>( <b><u>user_id</u></b> → Users.id, <b><u>product_id</u></b> → Products.id, created_at ) &nbsp;—&nbsp; keyed relation จาก M:N</td></tr>
+</table>
+<p>เหตุผลการแปลง: ความสัมพันธ์ 1 : N ทุกแบบถูกแปลงโดยการ “ติด” FK ไปไว้ที่ฝั่ง N; ความสัมพันธ์ M : N
+(USER–PRODUCT ผ่าน FAVORITE) ถูกแปลงเป็นตารางเชื่อมที่มี composite PK</p>
+
+<h2>6. การทำ Normalization</h2>
+<table>
+<tr><th>ฟอร์ม</th><th>การตรวจสอบ</th><th>ผลลัพธ์</th></tr>
+<tr><td><b>1NF</b></td><td>ทุกตารางมีค่าแอตทริบิวต์เป็นค่าเดี่ยว (atomic value) ไม่มีข้อมูล list ซ้ำซ้อนในช่องเดียว และมี Primary Key ทุกตาราง</td><td>ผ่าน</td></tr>
+<tr><td><b>2NF</b></td><td>ไม่มี Partial Dependency เพราะตารางที่ใช้ composite key มีตารางเดียว (favorites: user_id, product_id เป็นส่วนหนึ่งของ key และไม่มี attribute ที่พึ่งพาเพียงส่วนเดียวของ key)</td><td>ผ่าน</td></tr>
+<tr><td><b>3NF</b></td><td>ไม่มี Transitive Dependency — ชื่อ/ราคาสินค้าไม่ถูกเก็บซ้ำในตารางอื่น ทุกตารางอ้างอิงด้วย id (ส่วน <code>unit_price</code> ใน order_items เป็น “ราคาขณะสั่งซื้อ” ซึ่งเป็นข้อกำหนดเชิงธุรกิจ ไม่ใช่ dependency ต่อราคาปัจจุบันของสินค้า)</td><td>ผ่าน</td></tr>
+</table>
+<p>เมื่อตรวจสอบรูปแบบข้อมูลตามหลัก Normalization พบว่าโครงสร้างตารางในระบบไม่มีการซ้ำซ้อนของข้อมูลที่ต้องพึ่งพากันข้ามตาราง — ทุกตารางเก็บเฉพาะข้อมูลของ Entity ตนเอง และอ้างถึงส่วนอื่นด้วยรหัส (id) เท่านั้น</p>
+<p><b>หมายเหตุ:</b> การที่ระบบแสดง “ชื่อผู้ใช้/ชื่อสินค้า” แทนรหัสในหน้า Back Office และในรายงานสรุป ไม่ได้ทำให้เกิดการเก็บข้อมูลซ้ำ
+เพราะทำผ่าน <b>JOIN</b> และ <b>VIEW</b> (อ่านอย่างเดียว) โดยตารางจริงยังคงอยู่ในรูป 3NF ตามที่ออกแบบไว้</p>
+
+<h2 class="pb">7. ER Diagram</h2>
+<figure>
+  <img src="img/er_diagram.png" alt="ER Diagram">
+  <figcaption>รูปที่ 7.1 — ER Diagram ของระบบ Mood Wear (6 ตาราง, ความสัมพันธ์ 1:N ทั้ง 5 แบบ และ M:N ผ่าน favorites)</figcaption>
+</figure>
+
+<h2>8. Data Dictionary</h2>
+<h3>8.1 ตาราง users (ผู้ใช้งาน)</h3>
+<table>
+<tr><th>Field</th><th>Data Type</th><th>Size</th><th>PK / FK</th><th>Constraint</th><th>คำอธิบาย</th></tr>
+<tr><td>id</td><td>INTEGER</td><td>—</td><td>PK</td><td>NOT NULL, auto-increment</td><td>รหัสผู้ใช้</td></tr>
+<tr><td>username</td><td>TEXT</td><td>255</td><td>—</td><td>NOT NULL</td><td>ชื่อผู้ใช้</td></tr>
+<tr><td>email</td><td>TEXT</td><td>255</td><td>—</td><td>UNIQUE</td><td>อีเมล (ไม่ซ้ำ)</td></tr>
+<tr><td>phone</td><td>TEXT</td><td>32</td><td>—</td><td>—</td><td>เบอร์โทรศัพท์</td></tr>
+<tr><td>password_hash</td><td>TEXT</td><td>255</td><td>—</td><td>—</td><td>รหัสผ่านแบบเข้ารหัส (ไม่เก็บ plain text)</td></tr>
+</table>
+
+<h3>8.2 ตาราง products (สินค้า)</h3>
+<table>
+<tr><th>Field</th><th>Data Type</th><th>Size</th><th>PK / FK</th><th>Constraint</th><th>คำอธิบาย</th></tr>
+<tr><td>id</td><td>INTEGER</td><td>—</td><td>PK</td><td>NOT NULL, auto-increment</td><td>รหัสสินค้า</td></tr>
+<tr><td>name</td><td>TEXT</td><td>255</td><td>—</td><td>NOT NULL</td><td>ชื่อสินค้า</td></tr>
+<tr><td>price</td><td>INTEGER</td><td>—</td><td>—</td><td>NOT NULL</td><td>ราคา (บาท)</td></tr>
+<tr><td>category</td><td>TEXT</td><td>64</td><td>—</td><td>NOT NULL</td><td>หมวดสินค้า (Shoes/Upper/Bottom/Hat/Accessories/Set)</td></tr>
+<tr><td>stock</td><td>INTEGER</td><td>—</td><td>—</td><td>NOT NULL</td><td>จำนวนสินค้าคงเหลือ</td></tr>
+<tr><td>img</td><td>TEXT</td><td>255</td><td>—</td><td>DEFAULT ''</td><td>path รูปสินค้า</td></tr>
+<tr><td>vgroup</td><td>TEXT</td><td>64</td><td>—</td><td>DEFAULT ''</td><td>กลุ่ม variant (สินค้าที่มีรูปเดียวกัน)</td></tr>
+<tr><td>vname</td><td>TEXT</td><td>64</td><td>—</td><td>DEFAULT ''</td><td>ชื่อ variant แสดงหน้าร้าน</td></tr>
+<tr><td>vorder</td><td>INTEGER</td><td>—</td><td>—</td><td>DEFAULT 0</td><td>ลำดับการเรียง variant</td></tr>
+</table>
+
+<h3>8.3 ตาราง orders (คำสั่งซื้อ)</h3>
+<table>
+<tr><th>Field</th><th>Data Type</th><th>Size</th><th>PK / FK</th><th>Constraint</th><th>คำอธิบาย</th></tr>
+<tr><td>id</td><td>INTEGER</td><td>—</td><td>PK</td><td>NOT NULL, auto-increment</td><td>รหัสคำสั่งซื้อ</td></tr>
+<tr><td>user_id</td><td>INTEGER</td><td>—</td><td>FK → users.id</td><td>NOT NULL</td><td>ผู้สั่งซื้อ</td></tr>
+<tr><td>address</td><td>TEXT</td><td>255</td><td>—</td><td>NOT NULL</td><td>ที่อยู่จัดส่ง</td></tr>
+<tr><td>total</td><td>INTEGER</td><td>—</td><td>—</td><td>NOT NULL</td><td>ยอดเงินรวม (บาท)</td></tr>
+<tr><td>created_at</td><td>TEXT</td><td>32</td><td>—</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>วัน/เวลาที่สั่ง</td></tr>
+</table>
+
+<h3>8.4 ตาราง order_items (สินค้าในคำสั่งซื้อ)</h3>
+<table>
+<tr><th>Field</th><th>Data Type</th><th>Size</th><th>PK / FK</th><th>Constraint</th><th>คำอธิบาย</th></tr>
+<tr><td>id</td><td>INTEGER</td><td>—</td><td>PK</td><td>NOT NULL, auto-increment</td><td>รหัสรายการ</td></tr>
+<tr><td>order_id</td><td>INTEGER</td><td>—</td><td>FK → orders.id</td><td>NOT NULL</td><td>คำสั่งซื้อที่รายการนี้อยู่</td></tr>
+<tr><td>product_id</td><td>INTEGER</td><td>—</td><td>FK → products.id</td><td>NOT NULL</td><td>สินค้าที่สั่ง</td></tr>
+<tr><td>quantity</td><td>INTEGER</td><td>—</td><td>—</td><td>NOT NULL</td><td>จำนวนชิ้น</td></tr>
+<tr><td>size</td><td>TEXT</td><td>16</td><td>—</td><td>—</td><td>ไซส์ที่เลือก (รองเท้าเป็น US size)</td></tr>
+<tr><td>color</td><td>TEXT</td><td>64</td><td>—</td><td>—</td><td>สีที่เลือก</td></tr>
+<tr><td>unit_price</td><td>INTEGER</td><td>—</td><td>—</td><td>NOT NULL</td><td>ราคาต่อชิ้น ณ เวลาสั่งซื้อ</td></tr>
+</table>
+
+<h3>8.5 ตาราง cart_items (ตะกร้าสินค้า)</h3>
+<table>
+<tr><th>Field</th><th>Data Type</th><th>Size</th><th>PK / FK</th><th>Constraint</th><th>คำอธิบาย</th></tr>
+<tr><td>id</td><td>INTEGER</td><td>—</td><td>PK</td><td>NOT NULL, auto-increment</td><td>รหัสแถว</td></tr>
+<tr><td>user_id</td><td>INTEGER</td><td>—</td><td>FK → users.id</td><td>NOT NULL</td><td>เจ้าของตะกร้า</td></tr>
+<tr><td>product_id</td><td>INTEGER</td><td>—</td><td>FK → products.id</td><td>NOT NULL</td><td>สินค้าในตะกร้า</td></tr>
+<tr><td>quantity</td><td>INTEGER</td><td>—</td><td>—</td><td>DEFAULT 1</td><td>จำนวนชิ้น</td></tr>
+<tr><td>size</td><td>TEXT</td><td>16</td><td>—</td><td>DEFAULT 'M'</td><td>ไซส์ที่เลือก</td></tr>
+<tr><td>color</td><td>TEXT</td><td>64</td><td>—</td><td>DEFAULT ''</td><td>สีที่เลือก</td></tr>
+<tr><td colspan="6"><small>UNIQUE(user_id, product_id, size, color) — กันการใส่สินค้าเงื่อนไขเดียวกันซ้ำหลายแถว</small></td></tr>
+</table>
+
+<h3>8.6 ตาราง favorites (รายการที่ถูกใจ)</h3>
+<table>
+<tr><th>Field</th><th>Data Type</th><th>Size</th><th>PK / FK</th><th>Constraint</th><th>คำอธิบาย</th></tr>
+<tr><td>user_id</td><td>INTEGER</td><td>—</td><td>PK (composite), FK → users.id</td><td>NOT NULL</td><td>ผู้ใช้ที่กดถูกใจ</td></tr>
+<tr><td>product_id</td><td>INTEGER</td><td>—</td><td>PK (composite), FK → products.id</td><td>NOT NULL</td><td>สินค้าที่ถูกใจ</td></tr>
+<tr><td>created_at</td><td>TEXT</td><td>32</td><td>—</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>วัน/เวลาที่กดถูกใจ</td></tr>
+</table>
+
+<h3>8.7 สรุปจำนวนข้อมูลจริงในระบบ</h3>
+<table>
+<tr><th>ตาราง</th><th>จำนวนแถว (Rows)</th><th>เกณฑ์ ≥ 50 แถว</th></tr>
+<tr><td>products</td><td>66</td><td>ผ่าน</td></tr>
+<tr><td>users</td><td>51</td><td>ผ่าน</td></tr>
+<tr><td>orders</td><td>58</td><td>ผ่าน</td></tr>
+<tr><td>order_items</td><td>112</td><td>ผ่าน</td></tr>
+<tr><td>cart_items</td><td>52</td><td>ผ่าน</td></tr>
+<tr><td>favorites</td><td>52</td><td>ผ่าน</td></tr>
+</table>
+
+<h2 class="pb">9. Views สำหรับอ่านข้อมูลให้เห็นชื่อ (แทนการจำรหัส)</h2>
+<p>ปัญหาที่พบในการใช้งานจริงคือตาราง <code>orders</code>, <code>order_items</code>, <code>cart_items</code> และ <code>favorites</code>
+เก็บเฉพาะรหัสอ้างอิง (user_id / product_id) ทำให้อ่านข้อมูลดิบแล้วไม่รู้ว่า “ใครสั่ง” และ “สั่งอะไร”
+ทีมงานจึงแก้ปัญหาด้วยการสร้าง <b>VIEW</b> 4 ตัวที่ JOIN กับตาราง users และ products เพื่อแสดงชื่อ โดย<b>ไม่แก้โครงสร้างตารางจริง</b>
+(รักษา Normalization 3NF ตามข้อ 6)</p>
+<table>
+<tr><th>View</th><th>ดึงข้อมูลจาก</th><th>คอลัมน์ที่ได้</th></tr>
+<tr><td>v_orders</td><td>orders ⨝ users</td><td>id, user_id, <b>user_name</b>, address, total, created_at</td></tr>
+<tr><td>v_order_items</td><td>order_items ⨝ orders ⨝ users ⨝ products</td><td>id, order_id, <b>user_name</b>, product_id, <b>product_name</b>, quantity, size, color, unit_price</td></tr>
+<tr><td>v_cart_items</td><td>cart_items ⨝ users ⨝ products</td><td>id, user_id, <b>user_name</b>, product_id, <b>product_name</b>, quantity, size, color</td></tr>
+<tr><td>v_favorites</td><td>favorites ⨝ users ⨝ products</td><td>user_id, <b>user_name</b>, product_id, <b>product_name</b>, created_at</td></tr>
+</table>
+<pre>CREATE VIEW v_order_items AS
+SELECT oi.id, oi.order_id, u.username AS user_name,
+       oi.product_id, p.name AS product_name,
+       oi.quantity, oi.size, oi.color, oi.unit_price
+FROM order_items oi
+LEFT JOIN orders   o ON o.id = oi.order_id
+LEFT JOIN users    u ON u.id = o.user_id
+LEFT JOIN products p ON p.id = oi.product_id;
+
+-- ใช้งาน
+SELECT id, user_name, product_name, quantity, unit_price
+FROM v_order_items ORDER BY id LIMIT 5;</pre>
+<p>ผลลัพธ์ที่ได้จะอ่านเข้าใจทันที เช่น <code>#1 · Audit · AMI Paris De Coeur T-Shirt — Navy Blue · 1 ชิ้น · 790 บาท</code>
+view ทั้ง 4 ตัวถูกบันทึกไว้ในไฟล์ <code>database_export_sqlite.sql</code> และ <code>database_export_mysql.sql</code> เพื่อให้ผู้ตรวจนำไปใช้ได้ทันที</p>
+
+<h2>10. แดชบอร์ดสรุปยอดขาย และการแสดงข้อมูลใน Back Office</h2>
+<p>นอกเหนือจาก CRUD ตามเกณฑ์แล้ว ระบบมีหน้า <b>Dashboard</b> ที่คำนวณสรุปจากข้อมูลจริงในฐานข้อมูล (read-only) และแสดงรูปสินค้าในตาราง
+เพื่อให้ผู้ดูแลหลังบ้านอ่านข้อมูลได้ง่ายขึ้น โดยข้อมูลทุกแถวยังเป็นชุดเดิม ไม่มีการแก้ไขหรือลบข้อมูล</p>
+<table>
+<tr><th>ตัวชี้วัด</th><th>ค่า</th><th>แหล่งที่มา (SQL)</th></tr>
+<tr><td>ยอดขายรวม</td><td>฿1,218,120</td><td>SUM(orders.total)</td></tr>
+<tr><td>จำนวนคำสั่งซื้อ</td><td>58 ออเดอร์</td><td>COUNT(orders)</td></tr>
+<tr><td>สินค้าที่ขายได้</td><td>248 ชิ้น</td><td>SUM(order_items.quantity)</td></tr>
+<tr><td>ยอดเฉลี่ยต่อออเดอร์</td><td>฿21,002</td><td>AVG(orders.total)</td></tr>
+<tr><td>มูลค่าสินค้าในตะกร้า</td><td>฿416,810</td><td>SUM(products.price × cart_items.quantity)</td></tr>
+<tr><td>มูลค่าสต็อกคงเหลือ</td><td>฿2,924,010</td><td>SUM(products.price × products.stock)</td></tr>
+<tr><td>สินค้าใกล้หมด (≤ 5 ชิ้น)</td><td>9 รายการ</td><td>COUNT(products WHERE stock ≤ 5)</td></tr>
+<tr><td>สมาชิก</td><td>51 คน</td><td>COUNT(users)</td></tr>
+</table>
+<p>แดชบอร์ดยังแสดง <b>ยอดขาย 14 วันล่าสุด</b> (กราฟแท่ง), <b>สินค้าขายดี</b> (พร้อมรูปและจำนวนชิ้น), <b>ผู้ซื้อสูงสุด</b>,
+<b>ยอดขายตามหมวดหมู่</b> และ <b>ออเดอร์ล่าสุด</b> — ทุกตัวเลขคำนวณสดจากฐานข้อมูลทุกครั้งที่เปิดหน้า</p>
+<figure>
+  <img src="img/bo_dashboard.png" alt="Dashboard" style="max-height:135mm">
+  <figcaption>รูปที่ 10.1 — แดชบอร์ดสรุปยอดขาย (KPI, กราฟยอดขาย 14 วัน, สินค้าขายดีพร้อมรูป, ผู้ซื้อสูงสุด, ยอดขายตามหมวดหมู่)</figcaption>
+</figure>
+<div class="two">
+<figure>
+  <img src="img/bo_orders_thumbs.png" alt="ออเดอร์พร้อมรูปสินค้า" style="max-height:120mm">
+  <figcaption>รูปที่ 10.2 — ตาราง orders แสดงชื่อผู้ใช้และรูปสินค้าในออเดอร์ (สูงสุด 4 รูป + จำนวนที่เหลือ)</figcaption>
+</figure>
+<figure>
+  <img src="img/bo_order_items.png" alt="รายการสินค้าในคำสั่งซื้อ" style="max-height:120mm">
+  <figcaption>รูปที่ 10.3 — ตาราง order_items แสดง “#เลขออเดอร์ · ชื่อผู้ใช้” และชื่อสินค้าเต็มแทนรหัส</figcaption>
+</figure>
+</div>
+
+<h2 class="pb">ภาคผนวก A — การใช้งาน Back Office (สาธิตจริง)</h2>
+<p>Back Office เข้าใช้งานที่ <code>http://127.0.0.1:8000/admin</code> แสดงการ์ดจำนวนแถวทุกตาราง เลือกตารางจากแท็บ ค้นหา (ค้นได้ทั้งรหัสและชื่อ)
+และทำ <b>แสดง / เพิ่ม / แก้ไข / ลบ</b> ได้ทุกตาราง (เกณฑ์ 2.2 ข้อ 2–3):</p>
+<figure>
+  <img src="img/bo_overview2.png" alt="Back office overview" style="max-height:110mm">
+  <figcaption>รูป A.1 — ภาพรวม Back Office: แถวจำนวนข้อมูลทุกตาราง (66/51/58/112/52/52) แท็บเลือกตาราง (รวมแท็บแดชบอร์ด) ช่องค้นหา และปุ่มเพิ่มข้อมูล</figcaption>
+</figure>
+<div class="two">
+<figure>
+  <img src="img/bo_edit2.png" alt="แก้ไขข้อมูล" style="max-height:105mm">
+  <figcaption>รูป A.2 — Update: กด “แก้ไข” แถวจะแปลงเป็นฟอร์ม input กด “บันทึก” เพื่ออัปเดตข้อมูลจริงในฐานข้อมูล</figcaption>
+</figure>
+<figure>
+  <img src="img/bo_orders2.png" alt="แท็บคำสั่งซื้อ" style="max-height:105mm">
+  <figcaption>รูป A.3 — แท็บคำสั่งซื้อ (orders): ชื่อผู้ใช้ + รูปสินค้า + ปุ่มแก้ไข/ลบทุกแถว</figcaption>
+</figure>
+</div>
+
+<h2>ภาคผนวก B — แอปพลิเคชันร้านค้าหน้าร้าน (Mobile / Web)</h2>
+<p>แอปหน้าร้านเชื่อมต่อ API ชุดเดียวกับ Back Office โดยตรง ผู้ใช้เลือกดูสินค้า ดู variant ใส่ตะกร้า กดถูกใจ และสั่งซื้อ —
+ข้อมูลทั้งหมดถูกจัดเก็บในฐานข้อมูลเดียวกับที่ Back Office จัดการ:</p>
+<div class="two">
+<figure>
+  <img src="img/app_home.png" alt="หน้าแรก" style="max-height:100mm">
+  <figcaption>รูป B.1 — หน้าแรก รายการสินค้าจากตาราง products</figcaption>
+</figure>
+<figure>
+  <img src="img/app_product.png" alt="หน้าสินค้า" style="max-height:100mm">
+  <figcaption>รูป B.2 — หน้าสินค้า: เลือก variant ของสินค้าเดียวกับเปลี่ยนชื่อ/ราคาตามตาราง products</figcaption>
+</figure>
+</div>
+
+<h2>ภาคผนวก C — API ที่ใช้ในระบบ (REST, FastAPI)</h2>
+<table>
+<tr><th>Method</th><th>Path</th><th>การใช้งาน</th></tr>
+<tr><td>GET</td><td>/products, /products/{id}</td><td>รายการ/รายละเอียดสินค้า (แอปหน้าร้าน)</td></tr>
+<tr><td>POST</td><td>/register, /login</td><td>สมัครสมาชิก / เข้าสู่ระบบ (ตาราง users)</td></tr>
+<tr><td>GET/POST/PUT/DELETE</td><td>/cart, /cart/{id}</td><td>จัดการตะกร้า (cart_items)</td></tr>
+<tr><td>GET/POST/DELETE</td><td>/favorites</td><td>รายการที่ถูกใจ (favorites, composite key)</td></tr>
+<tr><td>POST</td><td>/orders</td><td>ยืนยันคำสั่งซื้อ → สร้าง orders + order_items</td></tr>
+<tr><td>GET</td><td>/orders?user_id=</td><td>ประวัติคำสั่งซื้อของผู้ใช้ (JOIN ชื่อสินค้า)</td></tr>
+<tr><td>GET/POST/PUT/DELETE</td><td>/admin/t/{table}[/{id}]</td><td>Back Office CRUD ทุกตาราง (JOIN ชื่อผู้ใช้/สินค้าเพื่อแสดงผล)</td></tr>
+<tr><td>GET</td><td>/admin/stats</td><td>สถิติจำนวนแถวทุกตาราง</td></tr>
+<tr><td>GET</td><td>/admin/summary</td><td>ข้อมูลแดชบอร์ด: ยอดขาย, สินค้าขายดี, ผู้ซื้อสูงสุด, ยอดตามหมวดหมู่, ยอดรายวัน</td></tr>
+</table>
+
+<h2>ภาคผนวก D — การติดตั้งระบบบนเครื่องอื่น</h2>
+<ul>
+<li>ติดตั้ง Python 3 และแพ็กเกจ: <code>pip install -r backend/requirements.txt</code> (FastAPI + uvicorn)</li>
+<li>รันระบบ: <code>uvicorn main:app --port 8000</code> จากโฟลเดอร์ <code>backend/</code> ระบบจะสร้างและ seed ฐานข้อมูล <code>fashion.db</code> ให้ครบทุกตารางเอง</li>
+<li>หรือ import ไฟล์ SQL สำเร็จรูป: <code>sqlite3 new.db &lt; database_export_sqlite.sql</code> (มี VIEW 4 ตัวท้ายไฟล์) หรือ import <code>database_export_mysql.sql</code> ผ่าน phpMyAdmin</li>
+<li>เข้าหน้า Back Office + แดชบอร์ด: <code>http://127.0.0.1:8000/admin</code> (รูปสินค้าเสิร์ฟที่ <code>/assets/products/…</code>)</li>
+<li>ไฟล์ข้อมูลประกอบ: <code>deliverables/mood_wear_data.xlsx</code> (ทุกชีตมีคอลัมน์ชื่อผู้ใช้/ชื่อสินค้าเพิ่มให้อ่านง่าย)</li>
+<li>คู่มือฉบับเต็มและคำอธิบายไฟล์ทั้งหมดอยู่ใน <code>README.md</code> ของ Repository (รวมอยู่ใน Source Code ที่ส่งขึ้น GitHub)</li>
+</ul>
+<p><small>ไฟล์รายงาน: 69db_report_681310676_681310306.pdf · ฝ่ายพัฒนา: ทีมงาน Mood Wear · ภาคการศึกษา 2569</small></p>
+
+</body>
+</html>

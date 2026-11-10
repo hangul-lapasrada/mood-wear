@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>โลโก้ รสถิ่นกลิ่นไทย — พรีวิว</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chonburi&display=swap');
+  body { margin:0; font-family:'Chonburi', serif; background:#555527; color:#efe3c6; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 32px 24px 80px; }
+  h1 { font-size: 20px; opacity:.85; font-weight:400; }
+  h2 { font-size: 15px; opacity:.65; font-weight:400; margin: 40px 0 12px; }
+  .stage { background:#6b6b3a; border-radius:12px; padding:16px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .stage svg { border-radius:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>พรีวิวโลโก้ รสถิ่นกลิ่นไทย</h1>
+
+  <h2>แบบ A — Srisakdi (ลายเล่นสไตล์ควันหม้อนึ่ง) · ขนาดสี่เหลี่ยมจัตุรัส 800×800</h2>
+  <div class="stage">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="540" height="540" role="img" aria-label="รสถิ่น กลิ่นไทย">
+      <defs>
+        <style>@import url('https://fonts.googleapis.com/css2?family=Srisakdi:wght@700&amp;display=swap');</style>
+        <linearGradient id="flameA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f4813f"/><stop offset="0.45" stop-color="#eb5b24"/><stop offset="1" stop-color="#d63a12"/>
+        </linearGradient>
+        <filter id="smokeA" x="-40%" y="-120%" width="180%" height="300%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="3" seed="7" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="46" xChannelSelector="R" yChannelSelector="G" result="wisp"/>
+          <feGaussianBlur in="wisp" stdDeviation="5" result="blur"/>
+          <feComponentTransfer><feFuncA type="linear" slope="0.55"/></feComponentTransfer>
+        </filter>
+        <filter id="shimmerA" x="-5%" y="-5%" width="110%" height="118%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9 0.03" numOctaves="2" seed="3" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="glowA" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
+        <linearGradient id="risefadeA" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="0.55" stop-color="#fff" stop-opacity="0.4"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <mask id="fadesmokeA"><rect x="0" y="150" width="800" height="620" fill="url(#risefadeA)"/></mask>
+        <path id="sparkA" d="M0 -7 C1.6 -2.4 2.4 -1.6 7 0 C2.4 1.6 1.6 2.4 0 7 C-1.6 2.4 -2.4 1.6 -7 0 C-2.4 -1.6 -1.6 -2.4 0 -7 Z"/>
+      </defs>
+      <rect width="800" height="800" fill="#6b6b3a"/>
+      <ellipse cx="400" cy="400" rx="250" ry="190" fill="#eb5b24" opacity="0.10" filter="url(#glowA)"/>
+      <g mask="url(#fadesmokeA)" opacity="0.5">
+        <text x="400" y="365" text-anchor="middle" font-family="'Srisakdi', serif" font-weight="700" font-size="118" fill="#efe3c6" filter="url(#smokeA)">รสถิ่น</text>
+        <text x="400" y="520" text-anchor="middle" font-family="'Srisakdi', serif" font-weight="700" font-size="118" fill="#efe3c6" filter="url(#smokeA)">กลิ่นไทย</text>
+      </g>
+      <g filter="url(#shimmerA)">
+        <text x="400" y="368" text-anchor="middle" font-family="'Srisakdi', serif" font-weight="700" font-size="118" fill="url(#flameA)">รสถิ่น</text>
+        <text x="400" y="523" text-anchor="middle" font-family="'Srisakdi', serif" font-weight="700" font-size="118" fill="url(#flameA)">กลิ่นไทย</text>
+      </g>
+      <g fill="#f4a13a" opacity="0.9">
+        <use href="#sparkA" transform="translate(565 258) scale(1.15)" opacity="0.95"/>
+        <use href="#sparkA" transform="translate(596 205) scale(0.8)" opacity="0.75"/>
+        <use href="#sparkA" transform="translate(230 250) scale(0.95)" opacity="0.8"/>
+        <use href="#sparkA" transform="translate(204 195) scale(0.6)" opacity="0.55"/>
+        <use href="#sparkA" transform="translate(620 320) scale(0.6)" opacity="0.6"/>
+        <use href="#sparkA" transform="translate(180 330) scale(0.7)" opacity="0.5"/>
+      </g>
+      <g stroke="#f4a13a" stroke-linecap="round">
+        <line x1="255" y1="590" x2="545" y2="590" stroke-width="7"/>
+        <line x1="292" y1="590" x2="262" y2="612" stroke-width="5"/>
+        <line x1="400" y1="590" x2="400" y2="612" stroke-width="5"/>
+        <line x1="508" y1="590" x2="538" y2="612" stroke-width="5"/>
+      </g>
+    </svg>
+  </div>
+
+  <h2>แบบ B — Chonburi (โบลด์เรโทร + ตะเกียบ) · ขนาดสี่เหลี่ยมจัตุรัส 800×800</h2>
+  <div class="stage">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="540" height="540" role="img" aria-label="รสถิ่น กลิ่นไทย">
+      <defs>
+        <style>@import url('https://fonts.googleapis.com/css2?family=Chonburi&amp;display=swap');</style>
+        <linearGradient id="flameB" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f4813f"/><stop offset="0.45" stop-color="#eb5b24"/><stop offset="1" stop-color="#d63a12"/>
+        </linearGradient>
+        <filter id="smokeB" x="-40%" y="-120%" width="180%" height="300%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.014 0.03" numOctaves="3" seed="11" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="42" xChannelSelector="R" yChannelSelector="G" result="wisp"/>
+          <feGaussianBlur in="wisp" stdDeviation="6" result="blur"/>
+          <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+        </filter>
+        <filter id="shimmerB" x="-5%" y="-5%" width="110%" height="118%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.03" numOctaves="2" seed="5" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="glowB" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="24"/></filter>
+        <linearGradient id="risefadeB" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="0.5" stop-color="#fff" stop-opacity="0.42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <mask id="fadesmokeB"><rect x="0" y="130" width="800" height="640" fill="url(#risefadeB)"/></mask>
+      </defs>
+      <rect width="800" height="800" fill="#6b6b3a"/>
+      <ellipse cx="400" cy="400" rx="260" ry="200" fill="#eb5b24" opacity="0.10" filter="url(#glowB)"/>
+      <g mask="url(#fadesmokeB)" opacity="0.5">
+        <text x="400" y="350" text-anchor="middle" font-family="'Chonburi', serif" font-size="112" fill="#efe3c6" filter="url(#smokeB)">รสถิ่น</text>
+        <text x="400" y="510" text-anchor="middle" font-family="'Chonburi', serif" font-size="112" fill="#efe3c6" filter="url(#smokeB)">กลิ่นไทย</text>
+      </g>
+      <g filter="url(#shimmerB)">
+        <text x="400" y="352" text-anchor="middle" font-family="'Chonburi', serif" font-size="116" fill="url(#flameB)">รสถิ่น</text>
+        <text x="400" y="512" text-anchor="middle" font-family="'Chonburi', serif" font-size="116" fill="url(#flameB)">กลิ่นไทย</text>
+      </g>
+      <g fill="#f4a13a" opacity="0.9">
+        <use href="#sparkA" transform="translate(585 250) scale(1.1)" opacity="0.95"/>
+        <use href="#sparkA" transform="translate(615 200) scale(0.8)" opacity="0.7"/>
+        <use href="#sparkA" transform="translate(215 245) scale(0.9)" opacity="0.8"/>
+        <use href="#sparkA" transform="translate(190 190) scale(0.6)" opacity="0.55"/>
+        <use href="#sparkA" transform="translate(630 315) scale(0.6)" opacity="0.6"/>
+      </g>
+      <g stroke="#f4a13a" stroke-width="6" stroke-linecap="round" fill="none">
+        <path d="M258 588 H542" stroke-width="7"/>
+        <path d="M300 585 L452 560"/>
+        <path d="M310 593 L458 566"/>
+      </g>
+    </svg>
+  </div>
+</div>
+</body>
+</html>

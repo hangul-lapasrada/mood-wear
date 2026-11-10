@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Mood Wear — รายงานโครงงาน Flutter 802202</title>
+<style>
+:root{--ink:#111;--mut:#666;--line:#e2e2e2;--soft:#f6f6f6}
+*{box-sizing:border-box}
+body{font-family:-apple-system,"Noto Sans Thai","Thonburi",Sukhumvit,Tahoma,sans-serif;color:var(--ink);font-size:12.5px;line-height:1.7;margin:0}
+@page{size:A4;margin:15mm}
+h1{font-size:21px;letter-spacing:.03em;margin:0 0 4px}
+h2{font-size:15.5px;margin:22px 0 8px;border-bottom:2px solid var(--ink);padding-bottom:5px;page-break-after:avoid;break-after:avoid}
+h3{font-size:13px;margin:14px 0 5px}
+p{margin:5px 0}
+table{border-collapse:collapse;width:100%;font-size:10.5px;margin:7px 0}
+th{border:1px solid #999;background:var(--soft);padding:5px 6px;text-align:left;font-size:9.5px;letter-spacing:.04em}
+td{border:1px solid var(--line);padding:5px 6px;vertical-align:top}
+tr{page-break-inside:avoid;break-inside:avoid}
+thead{display:table-header-group}
+code{background:var(--soft);padding:1px 4px;border-radius:4px;font-size:10.5px}
+figure{margin:10px 0;text-align:center;page-break-inside:avoid}
+figure img{max-width:100%;border:1px solid var(--line)}
+figcaption{font-size:9.5px;color:var(--mut);margin-top:4px}
+.cover{height:250mm;display:flex;flex-direction:column;justify-content:center;text-align:center;page-break-after:always}
+.cover .kicker{letter-spacing:.3em;font-size:10.5px;color:var(--mut);text-transform:uppercase}
+.cover h1{font-size:40px;letter-spacing:.08em;margin:16px 0 6px}
+.cover .sub{color:var(--mut);font-size:13px}
+.cover .meta{margin-top:36px;color:var(--mut);font-size:11.5px;line-height:2}
+.pb{page-break-before:always}
+ul{margin:5px 0 5px 18px;padding:0}
+ol{margin:5px 0 5px 20px;padding:0}
+.wf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.wf figure{margin:0;display:flex;flex-direction:column;align-items:center}
+.wf .box{height:118mm;width:100%;display:flex;align-items:flex-start;justify-content:center;overflow:hidden;border:1px solid var(--line);background:#fff}
+.wf .box img{border:none;max-height:100%;width:auto;max-width:100%}
+.wf figcaption{font-size:9px;text-align:center;margin-top:4px;line-height:1.45}
+.flow{background:var(--soft);padding:12px;margin:8px 0;font-size:10.5px}
+.flow .row{display:flex;align-items:center;justify-content:center;gap:8px;margin:7px 0;flex-wrap:wrap}
+.flow .n{border:1.2px solid #111;background:#fff;padding:5px 10px;border-radius:6px;font-size:10px;white-space:nowrap}
+.flow .n.first{background:#111;color:#fff}
+.flow .ar{color:#555;font-size:12px}
+.two{display:flex;gap:10px}
+.two>div{flex:1}
+.kv{display:inline-block;background:var(--soft);border-radius:6px;padding:2px 8px;margin:2px;font-size:10.5px}
+small{color:var(--mut)}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Final Project · Flutter · 802202</div>
+  <h1>MOOD WEAR</h1>
+  <div class="sub">แอปพลิเคชันร้านค้าแฟชั่นบนมือถือ — “แต่งตามอารมณ์ที่คุณเป็น”<br>พัฒนาด้วย Flutter (Dart) + REST API (FastAPI) + ฐานข้อมูล SQLite</div>
+  <div class="meta">
+    วิชา 802202 : FLUTTER DEVELOPMENT · ภาคการศึกษา 2569<br>
+    ผู้จัดทำ<br>
+    <b>นางสาว ลภัสรดา หาญกุล 681310676</b><br>
+    <b>นายวรเศรษฐ์ บุญสวัสดิ์ 681310306</b><br>
+    ไฟล์รายงาน: 69flutter_report_681310676_681310306.pdf
+  </div>
+</div>
+
+<h2>1. ชื่อแอปพลิเคชัน และชื่อ–รหัสนักศึกษา</h2>
+<table>
+<tr><th style="width:34%">รายการ</th><th>รายละเอียด</th></tr>
+<tr><td>ชื่อแอปพลิเคชัน</td><td><b>Mood Wear</b> — แอปช้อปปิ้งแฟชั่นที่ให้ผู้ใช้ “แมทช์ชุดตามอารมณ์” และประกอบชุดเองได้</td></tr>
+<tr><td>แพลตฟอร์ม</td><td>Flutter (Dart) — รันได้ทั้ง Android, Web (Chrome) และ macOS จากโค้ดชุดเดียวกัน</td></tr>
+<tr><td>ผู้จัดทำ 1</td><td>นางสาว ลภัสรดา หาญกุล — รหัสนักศึกษา <b>681310676</b></td></tr>
+<tr><td>ผู้จัดทำ 2</td><td>นายวรเศรษฐ์ บุญสวัสดิ์ — รหัสนักศึกษา <b>681310306</b></td></tr>
+<tr><td>อาจารย์ผู้สอน</td><td>รายวิชา 802202 Flutter Development</td></tr>
+<tr><td>ซอร์สโค้ด</td><td>โปรเจกต์ Flutter (<code>lib/</code>) + Backend API (<code>backend/</code>) อยู่ใน Repository เดียวกัน</td></tr>
+</table>
+
+<h2>2. Main Idea</h2>
+
+<h3>2.1 ปัญหาที่แอปแก้</h3>
+<p>ผู้ใช้กลุ่มวัยรุ่น–นักศึกษาเลือกเสื้อผ้าตาม “อารมณ์” และโอกาสในแต่ละวัน (วันเรียน วันเที่ยว วันทำงานกลุ่ม) แต่การแต่งชุดหนึ่งชุด
+ต้องเปิดหลายแอปพร้อมกันเพื่อเทียบเสื้อ กางเกง รองเท้า และเครื่องประดับ อีกทั้งแอปช้อปปิ้งทั่วไป
+<b>ไม่มีฟีเจอร์ “ประกอบชุด” ให้เห็นราคารวมก่อนตัดสินใจ</b> และไม่มีการบันทึกไอเท็มที่ถูกใจไว้จัดชุดซ้ำ
+ร้านค้าขนาดเล็กที่ขายผ่านมือถือก็มักไม่มีเครื่องมือหลังบ้านในการจัดการสินค้าและคำสั่งซื้อ</p>
+<p><b>Mood Wear</b> จึงรวมทุกอย่างไว้ในแอปเดียว: เลือกซื้อตามหมวด, ดูรายละเอียดสินค้าพร้อมสีและไซส์,
+<b>ประกอบชุดเองใน Style Studio (Mix &amp; Match)</b>, เก็บไอเท็มที่ถูกใจ, สั่งซื้อผ่านตะกร้า
+และมี Back Office สำหรับผู้ดูแลจัดการข้อมูลสินค้า/คำสั่งซื้อผ่าน API ชุดเดียวกัน</p>
+
+<h3>2.2 กลุ่มผู้ใช้เป้าหมาย</h3>
+<ul>
+<li><b>ผู้ซื้อ (Primary):</b> นักศึกษาและคนทำงานวัย 18–27 ปี ในเขตกรุงเทพฯ–ปริมณฑล ที่ช้อปปิ้งผ่านมือถือและสนใจแฟชั่นสตรีท/ไฮเอนด์ผสม</li>
+<li><b>ผู้ใช้รอง:</b> ผู้ที่ชอบแต่งชุดตามโอกาส (Outfit planner) ซึ่งต้องการเห็นชุด completo และราคารวมก่อนซื้อ</li>
+<li><b>ผู้ดูแลระบบ (Admin):</b> เจ้าของร้าน/ทีมหลังบ้านที่ต้องเพิ่ม แก้ไข ลบสินค้า และดูคำสั่งซื้อ</li>
+</ul>
+
+<h3>2.3 ฟีเจอร์หลัก 5 ข้อ</h3>
+<table>
+<tr><th style="width:5%">#</th><th style="width:24%">ฟีเจอร์</th><th>รายละเอียด</th><th style="width:20%">ข้อมูลที่ใช้</th></tr>
+<tr><td>1</td><td><b>เลือกซื้อตามหมวด (Home)</b></td><td>แบนเนอร์แนะนำคอลเลกชัน, แท็บหมวด New Arrival · Upper · Bottom · Hat · Shoes · Accessories, ส่วน Top-Pick และ Trending</td><td><code>products</code></td></tr>
+<tr><td>2</td><td><b>รายละเอียดสินค้า (Product Detail)</b></td><td>รูปหลายมุม, เลือกสีและไซส์, แสดงราคาและสต็อกคงเหลือ, กดถูกใจ, ใส่ตะกร้า หรือซื้อทันที</td><td><code>products</code>, <code>favorites</code>, <code>cart_items</code></td></tr>
+<tr><td>3</td><td><b>Style Studio (Mix &amp; Match)</b></td><td>หยิบสินค้าหลายชิ้นมาวางเป็นชุดของตัวเอง เห็นราคารวมทันที และบันทึก/ซื้อเป็นเซ็ต</td><td><code>products</code> (หมวด Set + สินค้าทั้งหมด)</td></tr>
+<tr><td>4</td><td><b>ตะกร้าและการสั่งซื้อ (Basket)</b></td><td>ปรับจำนวน/ลบสินค้า, คำนวณ subtotal + ค่าจัดส่ง + ยอดรวม, กรอกที่อยู่ และยืนยันคำสั่งซื้อ</td><td><code>cart_items</code>, <code>orders</code>, <code>order_items</code></td></tr>
+<tr><td>5</td><td><b>บัญชีผู้ใช้ &amp; รายการถูกใจ</b></td><td>สมัครสมาชิก/เข้าสู่ระบบ (เก็บรหัสผ่านแบบ SHA-256), หน้า Saved รวมไอเท็มที่กดถูกใจ</td><td><code>users</code>, <code>favorites</code></td></tr>
+</table>
+<p><small>ฟีเจอร์เสริม: ค้นหาสินค้า (Search) และ Back Office CRUD 6 ตาราง สำหรับผู้ดูแลร้าน</small></p>
+
+<h3>2.4 เทคโนโลยีที่ใช้</h3>
+<table>
+<tr><th style="width:28%">ส่วน</th><th>เทคโนโลยี</th><th>หน้าที่</th></tr>
+<tr><td>Frontend</td><td>Flutter 3 / Dart, Material Design, <code>http</code> package</td><td>UI ทั้ง 7 หน้าจอ, state management ภายใน <code>ShopShell</code>, เรียก REST API</td></tr>
+<tr><td>Backend</td><td>FastAPI + Uvicorn (Python)</td><td>ให้บริการ REST API 14 endpoint สำหรับแอป + 5 endpoint สำหรับ Back Office</td></tr>
+<tr><td>ฐานข้อมูล</td><td>SQLite (<code>fashion.db</code>) 6 ตาราง</td><td>เก็บสินค้า ผู้ใช้ คำสั่งซื้อ ตะกร้า และรายการถูกใจ</td></tr>
+<tr><td>เครื่องมือ</td><td>Android Studio, VS Code, Chrome (Flutter Web), GitHub</td><td>พัฒนา ทดสอบ และส่งงาน</td></tr>
+</table>
+
+<h2>3. Wireframe ทุกหน้าจอ (7 หน้า)</h2>
+<p>Wireframe ด้านล่างวาดจากโครงจริงของแอป (โครงเดียวกับที่พัฒนาใน Flutter) ใช้กล่องเทาแทนรูปสินค้า
+และข้อความตัวอย่าง “Name / THB: 100” เพื่อให้เห็นลำดับความสำคัญของข้อมูล (visual hierarchy) ก่อนใส่ข้อมูลจริง</p>
+
+<div class="wf">
+  <figure>
+    <div class="box"><img src="img/wf1.png" alt="Wireframe 1 Home"></div>
+    <figcaption><b>รูปที่ 3.1 — Home</b><br>แถบค้นหา + แจ้งเตือน + โปรไฟล์, แบนเนอร์คอลเลกชัน, แท็บหมวดสินค้า, Top-Pick และ Trending เลื่อนแนวนอน, แบนเนอร์ Style Studio และกริดสินค้า 2 คอลัมน์ ปิดท้ายด้วยแถบเมนูล่าง 5 แท็บ</figcaption>
+  </figure>
+  <figure>
+    <div class="box"><img src="img/wf2.png" alt="Wireframe 2 Product Detail"></div>
+    <figcaption><b>รูปที่ 3.2 — Product Detail</b><br>รูปหลัก + รูปย่อ 4 มุม, ชื่อสินค้าและปุ่มถูกใจ, คะแนนรีวิว, ราคา/สต็อกคงเหลือ, ตัวเลือกสี (swatch) และไซส์ (grid), คำอธิบายสินค้า และปุ่ม PUT IN BASKET / BUY NOW ตรึงด้านล่าง</figcaption>
+  </figure>
+  <figure>
+    <div class="box"><img src="img/wf3.png" alt="Wireframe 3 Set Detail"></div>
+    <figcaption><b>รูปที่ 3.3 — Set Detail (ชุดที่ประกอบเอง)</b><br>คอลลาจไอเท็มในชุด (เสื้อ กางเกง รองเท้า เครื่องประดับ + ปุ่มเพิ่มชิ้น), ชื่อชุด, ราคารวมของทั้งเซ็ต, ปุ่มใส่ตะกร้า/ซื้อทันที และสินค้าแนะนำด้านล่าง</figcaption>
+  </figure>
+  <figure>
+    <div class="box"><img src="img/wf4.png" alt="Wireframe 4 Login"></div>
+    <figcaption><b>รูปที่ 3.4 — Profile : เข้าสู่ระบบ</b><br>อวตารผู้ใช้, ช่องอีเมลและรหัสผ่าน, ปุ่ม Login และลิงก์ “New? Register” สำหรับไปหน้าสมัครสมาชิก</figcaption>
+  </figure>
+  <figure>
+    <div class="box"><img src="img/wf5.png" alt="Wireframe 5 Register"></div>
+    <figcaption><b>รูปที่ 3.5 — Profile : สมัครสมาชิก</b><br>ฟอร์ม Username, Email, Phone Number, Password และ Confirm Password พร้อมปุ่ม Register และลิงก์กลับไปหน้าเข้าสู่ระบบ</figcaption>
+  </figure>
+  <figure>
+    <div class="box"><img src="img/wf6.png" alt="Wireframe 6 Basket"></div>
+    <figcaption><b>รูปที่ 3.6 — Basket</b><br>รายการสินค้าในตะกร้าพร้อม checkbox เลือกชิ้น, สรุปยอด subtotal + ค่าจัดส่ง + yอดรวม, ช่องกรอกที่อยู่จัดส่ง, ปุ่ม Continue Shopping / Checkout และสินค้าที่คล้ายกัน</figcaption>
+  </figure>
+  <figure>
+    <div class="box"><img src="img/wf7.png" alt="Wireframe 7 Style Studio"></div>
+    <figcaption><b>รูปที่ 3.7 — Style Studio</b><br>แบนเนอร์ “Mix and Match your style” + ปุ่ม View More และกริดสินค้าทั้งหมดสำหรับหยิบมาประกอบเป็นชุด</figcaption>
+  </figure>
+</div>
+
+<h2>4. Navigation Flow</h2>
+<p>โครงหลักของแอปเป็น <b>Bottom Navigation 5 แท็บ</b> (Home · Style Studio · Search · Saved · Profile) อยู่ใน <code>ShopShell</code>
+ทุกแท็บใช้ Scaffold ร่วมกัน จึงสลับหน้าได้โดยไม่ต้องโหลดข้อมูลใหม่ทั้งหมด จากแท็บหลักผู้ใช้เดินทางไปหน้าลูก (Product Detail, Set Detail, Basket) ด้วยการ push หน้าใหม่และกลับด้วยปุ่มย้อนกลับ</p>
+
+<table>
+<tr><th style="width:6%">#</th><th style="width:26%">จากหน้า</th><th style="width:26%">ไปหน้า</th><th>การกระทำ / เงื่อนไข</th></tr>
+<tr><td>1</td><td>Home</td><td>Product Detail</td><td>แตะการ์ดสินค้า → เรียก <code>GET /products/{id}</code></td></tr>
+<tr><td>2</td><td>Home</td><td>หมวดสินค้า</td><td>แตะแท็บหมวด → กรองรายการด้วย <code>GET /products?category=</code></td></tr>
+<tr><td>3</td><td>Product Detail</td><td>Basket</td><td>PUT IN BASKET → <code>POST /cart</code> แล้วเปิดตะกร้า</td></tr>
+<tr><td>4</td><td>Style Studio</td><td>Set Detail</td><td>เลือกไอเท็มอย่างน้อย 1 ชิ้น → คำนวณราคารวม → ใส่ตะกร้า/ซื้อ</td></tr>
+<tr><td>5</td><td>Basket</td><td>คำสั่งซื้อสำเร็จ</td><td>กรอกที่อยู่ → Checkout → <code>POST /orders</code> สร้าง orders + order_items</td></tr>
+<tr><td>6</td><td>Profile</td><td>Login / Register</td><td><code>POST /login</code> หรือ <code>POST /register</code> (รหัสผ่านถูก hash ด้วย SHA-256)</td></tr>
+<tr><td>7</td><td>Saved</td><td>Product Detail</td><td>แตะไอเท็มที่ถูกใจ → เปิดรายละเอียดสินค้า</td></tr>
+</table>
+
+<figure>
+  <img src="img/flow.png" alt="Navigation flow" style="max-height:118mm">
+  <figcaption>รูปที่ 4.1 — แผนภาพ Navigation Flow ของ Mood Wear (แท็บหลัก 5 แท็บ + เส้นทางไปหน้าลูก)</figcaption>
+</figure>
+
+<h2>5. ER Diagram และการใช้งานข้อมูลของแต่ละหน้า</h2>
+<figure>
+  <img src="img/er_diagram.png" alt="ER Diagram" style="max-width:96%">
+  <figcaption>รูปที่ 5.1 — ER Diagram ของฐานข้อมูล Mood Wear (6 ตาราง): users, products, orders, order_items, cart_items, favorites</figcaption>
+</figure>
+
+<table>
+<tr><th style="width:20%">หน้าจอ</th><th style="width:38%">ตารางที่ใช้</th><th>รายละเอียดการอ่าน/เขียน</th></tr>
+<tr><td><b>Home</b></td><td><code>products</code></td><td>อ่านรายการสินค้าตามหมวด + จัดกลุ่ม Top-Pick / Trending</td></tr>
+<tr><td><b>Product Detail</b></td><td><code>products</code>, <code>favorites</code>, <code>cart_items</code></td><td>อ่านรายละเอียด/สต็อก, เขียน favorites เมื่อกดหัวใจ, เขียน cart_items เมื่อใส่ตะกร้า</td></tr>
+<tr><td><b>Style Studio / Set Detail</b></td><td><code>products</code></td><td>อ่านสินค้าทั้งหมด (รวมหมวด Set) เพื่อนำมาประกอบชุดและคำนวณราคารวม</td></tr>
+<tr><td><b>Search</b></td><td><code>products</code></td><td>ค้นหาด้วยคำค้น (ชื่อ/แบรนด์) ผ่าน <code>GET /products?search=</code></td></tr>
+<tr><td><b>Saved</b></td><td><code>favorites</code> + <code>products</code></td><td>อ่านรายการที่ผู้ใช้กดถูกใจ (join กับ products เพื่อแสดงรูป/ราคา)</td></tr>
+<tr><td><b>Basket</b></td><td><code>cart_items</code>, <code>products</code>, <code>orders</code>, <code>order_items</code></td><td>อ่าน/แก้ไข/ลบตะกร้า และเมื่อ Checkout จะสร้าง orders + order_items พร้อมล้างตะกร้า</td></tr>
+<tr><td><b>Profile (Login/Register)</b></td><td><code>users</code></td><td>ตรวจอีเมล–รหัสผ่าน หรือเพิ่มผู้ใช้ใหม่ (เก็บ password_hash)</td></tr>
+<tr><td><b>Back Office</b></td><td>ทั้ง 6 ตาราง</td><td>CRUD ข้อมูลทุกตารางสำหรับผู้ดูแลระบบ</td></tr>
+</table>
+
+<h2>6. รายการ API Endpoint ที่วางแผนไว้</h2>
+<table>
+<tr><th style="width:9%">Method</th><th style="width:38%">Path</th><th>หน้าที่</th><th style="width:20%">หน้าจอที่เรียก</th></tr>
+<tr><td>GET</td><td><code>/products</code></td><td>ดึงรายการสินค้า รองรับ <code>?category=</code> และ <code>?search=</code></td><td>Home, Search, Style Studio</td></tr>
+<tr><td>GET</td><td><code>/products/{pid}</code></td><td>ดึงรายละเอียดสินค้าตามรหัส (รวม variant สี/ไซส์)</td><td>Product Detail</td></tr>
+<tr><td>POST</td><td><code>/register</code></td><td>สมัครสมาชิกใหม่ (hash รหัสผ่าน SHA-256)</td><td>Profile – Register</td></tr>
+<tr><td>POST</td><td><code>/login</code></td><td>ตรวจสอบอีเมล/รหัสผ่าน คืนข้อมูลผู้ใช้</td><td>Profile – Login</td></tr>
+<tr><td>GET</td><td><code>/cart?user_id=</code></td><td>ดึงรายการในตะกร้าของผู้ใช้</td><td>Basket</td></tr>
+<tr><td>POST</td><td><code>/cart</code></td><td>เพิ่มสินค้าลงตะกร้า (กันซ้ำด้วย UNIQUE user/product/size/color)</td><td>Product Detail, Set Detail</td></tr>
+<tr><td>PUT</td><td><code>/cart/{cid}</code></td><td>แก้ไขจำนวน/ตัวเลือกของรายการในตะกร้า</td><td>Basket</td></tr>
+<tr><td>DELETE</td><td><code>/cart/{cid}</code></td><td>ลบสินค้าออกจากตะกร้า 1 รายการ</td><td>Basket</td></tr>
+<tr><td>DELETE</td><td><code>/cart</code></td><td>ล้างตะกร้าทั้งหมด (หลัง Checkout)</td><td>Basket</td></tr>
+<tr><td>GET</td><td><code>/favorites?user_id=</code></td><td>ดึงรายการสินค้าที่ถูกใจ</td><td>Saved</td></tr>
+<tr><td>POST</td><td><code>/favorites</code></td><td>กดถูกใจสินค้า (เพิ่มแถวใน favorites)</td><td>Product Detail, Set Detail</td></tr>
+<tr><td>DELETE</td><td><code>/favorites/{user_id}/{product_id}</code></td><td>ยกเลิกถูกใจ (composite key)</td><td>Saved, Product Detail</td></tr>
+<tr><td>POST</td><td><code>/orders</code></td><td>สร้างคำสั่งซื้อ + รายการสินค้าในคำสั่งซื้อ</td><td>Basket (Checkout)</td></tr>
+<tr><td>GET</td><td><code>/orders?user_id=</code></td><td>ดึงประวัติคำสั่งซื้อของผู้ใช้</td><td>Profile / ประวัติสั่งซื้อ</td></tr>
+<tr><td>GET</td><td><code>/admin</code>, <code>/admin/stats</code></td><td>หน้า Back Office และสถิติจำนวนแถวทุกตาราง</td><td>Back Office</td></tr>
+<tr><td>GET/POST/PUT/DELETE</td><td><code>/admin/t/{table}[/{pid}]</code></td><td>CRUD ข้อมูลทุกตาราง (products, users, orders, order_items, cart_items, favorites)</td><td>Back Office</td></tr>
+</table>
+
+<h2>7. สรุป</h2>
+<p>Mood Wear เป็นแอป Flutter ที่ออกแบบครบวงจรตั้งแต่แนวคิด ปัญหา กลุ่มเป้าหมาย 5 ฟีเจอร์หลัก ไปจนถึง Wireframe 7 หน้า
+Navigation Flow และการเชื่อมโยงกับฐานข้อมูล 6 ตารางผ่าน REST API ทำให้เห็นภาพว่า Flutter ไม่ได้เป็นเพียงส่วนหน้าจอ
+แต่ทำงานร่วมกับระบบหลังบ้านและฐานข้อมูลจริง ผู้ใช้สามารถเลือกซื้อสินค้า ประกอบชุดเอง บันทึกสิ่งที่ถูกใจ และสั่งซื้อได้ในแอปเดียว
+ขณะที่ผู้ดูแลร้านจัดการข้อมูลผ่าน Back Office ที่ใช้ฐานข้อมูลชุดเดียวกัน</p>
+
+<p><small>ไฟล์รายงาน: 69flutter_report_681310676_681310306.pdf · วิชา 802202 Flutter Development · ภาคการศึกษา 2569</small></p>
+
+</body>
+</html>

@@ -24,3 +24,17 @@ backend/admin.html.b
 
 # โฟลเดอร์แนบของระบบแชท (ไม่เกี่ยวกับ Source Code)
 .cloud-attachments/
+
+# IDE ชั่วคราว
+.idea/caches/
+.idea/workspace.xml
+.vscode/
+
+# ภาพตรวจงานชั่วคราว (ไม่ใช้ในเอกสาร/README)
+deliverables/img/chk*.png
+deliverables/img/check_*.png
+deliverables/img/fin*.png
+deliverables/img/wf_raw_*.png
+deliverables/img/dbdiagram_check*.png
+deliverables/img/slides_s6_html.png
+deliverables/img/android_studio_web_check.png

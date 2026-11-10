@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 
 import 'models.dart';
 
-// Android emulator: 10.0.2.2. iOS simulator: localhost.
-const apiBase =
-    String.fromEnvironment('API_URL', defaultValue: 'http://10.0.2.2:8000');
+// Web (Chrome): localhost. Android emulator: 10.0.2.2. iOS simulator: localhost.
+// Override with: --dart-define=API_URL=http://<host>:8000
+const apiBase = String.fromEnvironment('API_URL',
+    defaultValue:
+        kIsWeb ? 'http://127.0.0.1:8000' : 'http://10.0.2.2:8000');
 
 /// All HTTP calls to the FastAPI backend (products, cart, favorites, orders).
 class Api {
